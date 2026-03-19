@@ -63,7 +63,7 @@ export default function RootLayout({
                   +44 (0) 203 603 0441
                 </p>
                 <p className="font-sans text-[11px] tracking-widest text-navy">
-                  <a href="mailto:privatesales@arthurjamesadvisory.com" className="hover:text-gold transition-colors duration-500">privatesales@arthurjamesadvisory.com</a>
+                  <a href="mailto:info@arthurjamesgallery.com" className="hover:text-gold transition-colors duration-500">info@arthurjamesgallery.com</a>
                 </p>
               </div>
 
