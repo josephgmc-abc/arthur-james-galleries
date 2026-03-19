@@ -133,8 +133,8 @@ const run = async () => {
     });
   }
 
-  // 4. Import Exhibitions
-  console.log('Importing Exhibitions...');
+  // 4. Import Exhibitions / Events
+  console.log('Importing Events & Exhibitions...');
   const exhibitionsData = extractArray(fs.readFileSync('data/exhibitions.ts', 'utf8'));
   for (const item of exhibitionsData) {
     console.log(`- ${item.title}`);
