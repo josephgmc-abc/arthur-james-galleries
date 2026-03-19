@@ -47,7 +47,24 @@ export async function getReports() {
       "date": publishedAt,
       "pdfUrl": pdfFile.asset->url
     }`);
-    return data && data.length > 0 ? data : dummyReports;
+    
+    if (data && data.length > 0) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return data.map((report: any) => {
+        const dateObj = new Date(report.date);
+        const formattedDate = dateObj.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        }).toUpperCase();
+        
+        return {
+          ...report,
+          date: formattedDate
+        };
+      });
+    }
+    return dummyReports;
   } catch (e) {
     console.error(e);
     return dummyReports;
