@@ -143,7 +143,7 @@ export default function ContactPage() {
               United Kingdom
             </p>
             <p className="font-sans text-sm text-charcoal/70 mt-2">
-              <a href="mailto:london@arthurjames.com" className="hover:text-gold transition-colors duration-500 border-b-[1.5px] border-navy/20 pb-0.5">london@arthurjames.com</a>
+              <a href="mailto:info@arthurjamesgallery.com" className="hover:text-gold transition-colors duration-500 border-b-[1.5px] border-navy/20 pb-0.5">info@arthurjamesgallery.com</a>
             </p>
           </div>
 
