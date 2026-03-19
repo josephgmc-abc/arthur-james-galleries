@@ -105,7 +105,7 @@ const run = async () => {
       artist: artistRef ? { _type: 'reference', _ref: artistRef } : undefined,
       images: image ? [{ ...image, _key: 'img-main' }] : [],
       year: item.year,
-      price: item.price,
+      estimate: item.price,
       status: 'Available',
     };
 

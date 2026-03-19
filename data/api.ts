@@ -13,7 +13,7 @@ export async function getArtworks() {
       title,
       "artist": artist->name,
       year,
-      price,
+      "price": coalesce(estimate, price),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg")
     }`);
     return data && data.length > 0 ? data : dummyArtworks;
