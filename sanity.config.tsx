@@ -6,6 +6,36 @@ import { schemaTypes } from "./sanity/schemas";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "project-id-placeholder";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const customStructure = (S: any) =>
+  S.list()
+    .title("Gallery Management")
+    .items([
+      S.listItem()
+        .title("1. The Viewing Room")
+        .child(
+          S.list()
+            .title("The Viewing Room")
+            .items([
+              S.documentTypeListItem("artwork").title("All Artworks"),
+              S.documentTypeListItem("artist").title("Represented Artists"),
+            ])
+        ),
+      S.divider(),
+      S.listItem()
+        .title("2. Editorial & Insights")
+        .child(
+          S.list()
+            .title("Editorial")
+            .items([
+              S.documentTypeListItem("report").title("Market Reports"),
+              S.documentTypeListItem("exhibition").title("Events & Exhibitions"),
+            ])
+        ),
+      S.divider(),
+      S.documentTypeListItem("contact").title("3. Client Inquiries"),
+    ]);
+
 export default defineConfig({
   name: "arthur-james-galleries",
   title: "Arthur James Galleries",
@@ -14,7 +44,12 @@ export default defineConfig({
   projectId,
   dataset,
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool({
+      structure: customStructure,
+    }),
+    visionTool(),
+  ],
 
   schema: {
     types: schemaTypes,

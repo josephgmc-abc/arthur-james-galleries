@@ -1,3 +1,4 @@
+/* eslint-disable */
 const fs = require('fs');
 const path = require('path');
 const { createClient } = require('@sanity/client');
@@ -102,7 +103,7 @@ const run = async () => {
       title: item.title,
       slug: { _type: 'slug', current: item.slug },
       artist: artistRef ? { _type: 'reference', _ref: artistRef } : undefined,
-      images: image ? [image] : [],
+      images: image ? [{ ...image, _key: 'img-main' }] : [],
       year: item.year,
       price: item.price,
       status: 'Available',
