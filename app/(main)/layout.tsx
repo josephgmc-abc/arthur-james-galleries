@@ -59,10 +59,13 @@ export default function RootLayout({
                 <p className="font-sans text-sm tracking-wide text-charcoal/80 max-w-sm leading-relaxed mb-6">
                   Advisory and curation for dedicated collectors.
                 </p>
-                <p className="font-sans text-sm tracking-widest text-navy">
+                <p className="font-sans text-sm tracking-widest text-navy mb-2">
                   +44 (0) 203 603 0441
                 </p>
-                </div>
+                <p className="font-sans text-[11px] tracking-widest text-navy">
+                  <a href="mailto:privatesales@arthurjamesadvisory.com" className="hover:text-gold transition-colors duration-500">privatesales@arthurjamesadvisory.com</a>
+                </p>
+              </div>
 
                 <div className="lg:col-span-3 flex flex-col gap-4">
                 <span className="font-sans text-[10px] tracking-[0.3em] text-gold uppercase">Head Office</span>
