@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import ReportCard from "@/components/ReportCard";
 import StandardCarousel from "@/components/StandardCarousel";
 import { dummyArtworks } from "@/data/artworks";
+import { dummyExhibitions } from "@/data/exhibitions";
 
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
@@ -74,27 +75,8 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-0">
-          {[
-            {
-              title: "Beyond the Veil: Modern Abstraction",
-              location: "London Head Office, Holborn",
-              dates: "April 12 — May 30, 2026",
-              type: "In-Person / Private Viewing"
-            },
-            {
-              title: "The Surrealist Legacy: Salvador Dalí",
-              location: "Paris Annex, Rue de Seine",
-              dates: "June 15 — August 10, 2026",
-              type: "Curated Retrospective"
-            },
-            {
-              title: "New Horizons: South Asian Masters",
-              location: "Kent Private Viewing Space",
-              dates: "September 05 — October 20, 2026",
-              type: "Advisory Exclusive"
-            }
-          ].map((exhibition, index) => (
-            <div key={index} className="group border-t-[1.5px] border-navy/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-navy/[0.02] transition-colors duration-500 px-4 -mx-4 cursor-pointer">
+          {dummyExhibitions.slice(0, 3).map((exhibition) => (
+            <Link href={`/exhibitions/${exhibition.slug}`} key={exhibition.slug} className="group border-t-[1.5px] border-navy/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-navy/[0.02] transition-colors duration-500 px-4 -mx-4 cursor-pointer">
               <div className="flex flex-col gap-2">
                 <span className="font-sans text-[10px] tracking-[0.2em] text-charcoal/40 uppercase group-hover:text-gold transition-colors duration-500">{exhibition.dates}</span>
                 <h3 className="font-serif text-3xl md:text-4xl text-navy group-hover:translate-x-2 transition-transform duration-700 ease-out">{exhibition.title}</h3>
@@ -103,7 +85,7 @@ export default function Home() {
                 <p className="font-sans text-sm text-charcoal/80">{exhibition.location}</p>
                 <p className="font-sans text-[10px] tracking-widest text-charcoal/40 uppercase">{exhibition.type}</p>
               </div>
-            </div>
+            </Link>
           ))}
           <div className="border-t-[1.5px] border-navy/20"></div>
         </div>
