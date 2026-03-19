@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ReportCard from "@/components/ReportCard";
-import { dummyReports } from "@/data/reports";
+import { getReports } from "@/data/api";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function ReportsPage() {
+export default async function ReportsPage() {
+  const reports = await getReports();
+
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">
       {/* Video Hero Section */}
@@ -51,7 +54,7 @@ export default function ReportsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-x-8 md:gap-y-16 mb-16">
-          {dummyReports.map((report) => (
+          {reports.map((report: any) => (
             <ReportCard 
               key={report.slug}
               title={report.title}

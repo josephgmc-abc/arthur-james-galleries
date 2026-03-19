@@ -66,6 +66,13 @@ export const artwork = defineType({
       of: [{ type: "block" }],
     }),
     defineField({
+      name: "price",
+      title: "Price / Estimate",
+      type: "string",
+      group: "valuation",
+      description: "e.g. 'USD 150,000 - 200,000' or 'Price Upon Request'",
+    }),
+    defineField({
       name: "status",
       title: "Status",
       type: "string",

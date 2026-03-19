@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from "next/navigation";
-import { dummyArtworks } from "@/data/artworks";
+import { getArtworks } from "@/data/api";
 import ArtworkClientView from "@/components/ArtworkClientView";
 
 // 1. Dynamic SEO & OpenGraph Generation
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  const artwork = dummyArtworks.find((item) => item.slug === slug);
+  const artworks = await getArtworks();
+  const artwork = artworks.find((item: any) => item.slug === slug);
 
   if (!artwork) return {};
 
@@ -30,15 +32,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function ArtworkPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  const artwork = dummyArtworks.find((item) => item.slug === slug);
+  const artworks = await getArtworks();
+  const artwork = artworks.find((item: any) => item.slug === slug);
 
   if (!artwork) {
     notFound();
   }
 
   // Find related artworks by the same artist, excluding this exact one
-  const relatedArtworks = dummyArtworks.filter(
-    (a) => a.artist === artwork.artist && a.id !== artwork.id
+  const relatedArtworks = artworks.filter(
+    (a: any) => a.artist === artwork.artist && a.id !== artwork.id
   );
 
   return <ArtworkClientView artwork={artwork} relatedArtworks={relatedArtworks} />;

@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { dummyExhibitions } from "@/data/exhibitions";
+import { getExhibitions } from "@/data/api";
 import { ArrowLeft, Calendar, MapPin, Tag } from "lucide-react";
 
 export default async function ExhibitionDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   
-  const exhibition = dummyExhibitions.find((item) => item.slug === slug);
+  const exhibitions = await getExhibitions();
+  const exhibition = exhibitions.find((item: any) => item.slug === slug);
 
   if (!exhibition) {
     notFound();
@@ -81,7 +83,7 @@ export default async function ExhibitionDetailPage({ params }: { params: { slug:
               {exhibition.description}
             </p>
             <p>
-              Our exhibitions are meticulously curated to provide an immersive experience into the artist's world. Whether you are expanding an established collection or exploring new acquisitions, our gallery directors are available for bespoke walkthroughs and advisory sessions.
+              Our exhibitions are meticulously curated to provide an immersive experience into the artist&apos;s world. Whether you are expanding an established collection or exploring new acquisitions, our gallery directors are available for bespoke walkthroughs and advisory sessions.
             </p>
             <p>
               Please note that access to certain monumental works and off-market pieces may be restricted to private viewing appointments only.

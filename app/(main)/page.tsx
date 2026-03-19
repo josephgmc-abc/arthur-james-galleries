@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import ReportCard from "@/components/ReportCard";
 import StandardCarousel from "@/components/StandardCarousel";
-import { dummyArtworks } from "@/data/artworks";
-import { dummyExhibitions } from "@/data/exhibitions";
+import { getArtworks, getReports, getExhibitions } from "@/data/api";
 
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
-export default function Home() {
+export default async function Home() {
+  const artworks = await getArtworks();
+  const reports = await getReports();
+  const exhibitions = await getExhibitions();
+
   return (
     <div className="flex flex-col w-full bg-beige">
       <Hero />
-
+      
       {/* Featured Artworks Section */}
       <section className="py-32 bg-beige">
         <div className="flex justify-between items-end mb-16 px-6 md:px-12">
@@ -20,8 +24,8 @@ export default function Home() {
             View All Artworks
           </Link>
         </div>
-
-        <StandardCarousel artworks={dummyArtworks.slice(0, 10)} />
+        
+        <StandardCarousel artworks={artworks.slice(0, 10)} />
       </section>
 
       <Divider />
@@ -75,7 +79,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-0">
-          {dummyExhibitions.slice(0, 3).map((exhibition) => (
+          {exhibitions.slice(0, 3).map((exhibition: any) => (
             <Link href={`/exhibitions/${exhibition.slug}`} key={exhibition.slug} className="group border-t-[1.5px] border-navy/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-navy/[0.02] transition-colors duration-500 px-4 -mx-4 cursor-pointer">
               <div className="flex flex-col gap-2">
                 <span className="font-sans text-[10px] tracking-[0.2em] text-charcoal/40 uppercase group-hover:text-gold transition-colors duration-500">{exhibition.dates}</span>
@@ -103,48 +107,16 @@ export default function Home() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <ReportCard 
-            dark
-            title="The Rise of Digital Provenance"
-            summary="An analysis of how cryptographic verification is reshaping the secondary market for contemporary art."
-            date="MARCH 15, 2026"
-            href="/reports/digital-provenance"
-          />
-          <ReportCard 
-            dark
-            title="Emerging Geographies"
-            summary="Identifying key growth markets in the Asia-Pacific region for mid-career acquisitions."
-            date="FEBRUARY 28, 2026"
-            href="/reports/emerging-geographies"
-          />
-          <ReportCard 
-            dark
-            title="Post‑War Resurgence"
-            summary="A deep dive into the recent auction records set by mid-century European abstractionists and what it signals for Q3."
-            date="FEBRUARY 10, 2026"
-            href="/reports/post-war-resurgence"
-          />
-          <ReportCard 
-            dark
-            title="Navigating the Private Sale"
-            summary="A comprehensive guide for private collectors on executing discreet, high-value off-market transactions."
-            date="JANUARY 22, 2026"
-            href="/reports/navigating-private-sale"
-          />
-          <ReportCard 
-            dark
-            title="Sculpture & Spatial Assets"
-            summary="Why large-scale outdoor installations are outperforming traditional two-dimensional works in the current economic climate."
-            date="JANUARY 05, 2026"
-            href="/reports/sculpture-spatial-assets"
-          />
-          <ReportCard 
-            dark
-            title="The Institutional Shift"
-            summary="How major museums deaccessioning works are creating unprecedented opportunities for private collectors."
-            date="DECEMBER 14, 2025"
-            href="/reports/institutional-shift"
-          />
+          {reports.slice(0, 6).map((report: any) => (
+            <ReportCard 
+              key={report.slug}
+              dark
+              title={report.title}
+              summary={report.summary}
+              date={report.date}
+              href={`/reports/${report.slug}`}
+            />
+          ))}
         </div>
       </section>
     </div>

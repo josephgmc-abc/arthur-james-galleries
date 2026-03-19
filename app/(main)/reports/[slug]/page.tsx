@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { dummyReports } from "@/data/reports";
+import { getReports } from "@/data/api";
 import { ArrowLeft, Lock } from "lucide-react";
 
 export default async function ReportDetailPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  
-  const report = dummyReports.find((item) => item.slug === slug);
+  const reports = await getReports();
+  const report = reports.find((item: any) => item.slug === slug);
 
   if (!report) {
     notFound();

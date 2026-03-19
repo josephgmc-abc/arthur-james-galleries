@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
-import { dummyArtists } from "@/data/artists";
+import { getArtists } from "@/data/api";
 
-export default function ArtistsDirectoryPage() {
+export default async function ArtistsDirectoryPage() {
+  const artists = await getArtists();
   // Sort artists alphabetically
-  const sortedArtists = [...dummyArtists].sort((a, b) => a.name.localeCompare(b.name));
+  const sortedArtists = [...artists].sort((a: any, b: any) => a.name.localeCompare(b.name));
 
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">

@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
-import { dummyExhibitions } from "@/data/exhibitions";
+import { getExhibitions } from "@/data/api";
 
-export default function ExhibitionsPage() {
+export default async function ExhibitionsPage() {
+  const exhibitions = await getExhibitions();
+
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">
       {/* Hero Banner */}
@@ -32,7 +35,7 @@ export default function ExhibitionsPage() {
       {/* Main Content */}
       <section className="py-32 px-6 md:px-12 bg-beige">
         <div className="flex flex-col gap-0 max-w-6xl mx-auto">
-          {dummyExhibitions.map((exhibition) => (
+          {exhibitions.map((exhibition: any) => (
             <Link href={`/exhibitions/${exhibition.slug}`} key={exhibition.slug} className="group border-t-[1.5px] border-navy/20 py-16 flex flex-col md:flex-row justify-between items-start md:items-center hover:bg-navy/[0.02] transition-colors duration-500 px-6 -mx-6 cursor-pointer">
               <div className="flex flex-col gap-4 max-w-3xl">
                 <span className="font-sans text-[10px] tracking-[0.2em] text-charcoal/40 uppercase group-hover:text-gold transition-colors duration-500">{exhibition.dates}</span>
