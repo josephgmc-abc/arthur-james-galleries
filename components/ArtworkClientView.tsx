@@ -26,7 +26,115 @@ interface ArtworkClientViewProps {
 export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkClientViewProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { formatPrice } = useCurrency();
+
+  const handleDownloadDossier = async () => {
+    try {
+      setIsDownloading(true);
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF({ format: "a4", unit: "mm" });
+      
+      // Add Gallery Header
+      doc.setFont("times", "normal");
+      doc.setFontSize(24);
+      doc.text("Arthur James Galleries", 105, 25, { align: "center" });
+      
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("PRIVATE & CONFIDENTIAL DOSSIER", 105, 32, { align: "center" });
+
+      // Add Line
+      doc.setDrawColor(200, 200, 200);
+      doc.line(20, 40, 190, 40);
+
+      // Artwork Details
+      doc.setTextColor(20, 20, 20);
+      doc.setFont("times", "normal");
+      doc.setFontSize(32);
+      
+      const splitTitle = doc.splitTextToSize(artwork.title, 170);
+      doc.text(splitTitle, 20, 55);
+      
+      const titleHeight = splitTitle.length * 12;
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`${artwork.artist.toUpperCase()}`, 20, 55 + titleHeight);
+      doc.text(`${artwork.year || "Unknown"}`, 20, 62 + titleHeight);
+
+      // Details Box
+      const startY = 75 + titleHeight;
+      doc.setFontSize(9);
+      doc.setTextColor(150, 150, 150);
+      doc.text("ESTIMATED PRICE", 20, startY);
+      doc.setTextColor(20, 20, 20);
+      doc.setFont("times", "normal");
+      doc.setFontSize(14);
+      doc.text(formatPrice(artwork.price), 20, startY + 6);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(9);
+      doc.setTextColor(150, 150, 150);
+      doc.text("MEDIUM", 20, startY + 20);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      doc.text("Oil on canvas (Assumed)", 20, startY + 25);
+
+      doc.setFontSize(9);
+      doc.setTextColor(150, 150, 150);
+      doc.text("DIMENSIONS", 20, startY + 35);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      doc.text("Contact for dimensions", 20, startY + 40);
+
+      doc.setFontSize(9);
+      doc.setTextColor(150, 150, 150);
+      doc.text("PROVENANCE", 20, startY + 50);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      const splitProv = doc.splitTextToSize("Property from a distinguished private collection. Accompanied by a certificate of authenticity.", 170);
+      doc.text(splitProv, 20, startY + 55);
+
+      // Add image to next page
+      try {
+        const imgBlob = await fetch(artwork.imageSrc).then(r => r.blob());
+        const reader = new FileReader();
+        reader.readAsDataURL(imgBlob);
+        reader.onloadend = function() {
+          const base64data = reader.result as string;
+          doc.addPage();
+          
+          // Basic aspect ratio math to fit A4 (210x297mm) with 20mm margins
+          const maxWidth = 170;
+          const maxHeight = 250;
+          
+          const imgProps = doc.getImageProperties(base64data);
+          const ratio = imgProps.width / imgProps.height;
+          let width = maxWidth;
+          let height = maxWidth / ratio;
+          
+          if (height > maxHeight) {
+            height = maxHeight;
+            width = maxHeight * ratio;
+          }
+          
+          doc.addImage(base64data, 'JPEG', 20 + (maxWidth - width)/2, 20, width, height); 
+          doc.save(`${artwork.slug}-dossier.pdf`);
+          setIsDownloading(false);
+        }
+      } catch (e) {
+        doc.save(`${artwork.slug}-dossier.pdf`);
+        setIsDownloading(false);
+      }
+
+    } catch (err) {
+      console.error(err);
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <>
@@ -38,7 +146,7 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           {/* Image Display */}
-          <div className="lg:col-span-8 relative flex items-center justify-center bg-white/50 p-8 md:p-16 border border-navy/5 group cursor-zoom-in" onClick={() => setIsLightboxOpen(true)}>
+          <div data-cursor="view" className="lg:col-span-8 relative flex items-center justify-center bg-white/50 p-8 md:p-16 border border-navy/5 group cursor-none" onClick={() => setIsLightboxOpen(true)}>
             <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 text-navy bg-white/50 p-2 rounded-full backdrop-blur-md">
               <Maximize2 strokeWidth={1} className="w-5 h-5" />
             </div>
@@ -92,12 +200,22 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
               </div>
             </div>
 
-            <button 
-              onClick={() => setIsInquiryOpen(true)}
-              className="w-full bg-navy text-white px-8 py-5 font-sans text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-500"
-            >
-              Inquire About This Work
-            </button>
+            <div className="flex flex-col gap-4 mt-8">
+              <button 
+                onClick={() => setIsInquiryOpen(true)}
+                className="w-full bg-navy text-white px-8 py-5 font-sans text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-500"
+              >
+                Inquire About This Work
+              </button>
+              
+              <button 
+                onClick={handleDownloadDossier}
+                disabled={isDownloading}
+                className={`w-full border-[1.5px] border-navy/20 text-navy px-8 py-5 font-sans text-xs uppercase tracking-widest transition-colors duration-500 ${isDownloading ? 'opacity-50 cursor-wait' : 'hover:border-navy hover:bg-navy/5'}`}
+              >
+                {isDownloading ? 'Generating...' : 'Download Dossier (PDF)'}
+              </button>
+            </div>
           </div>
         </div>
 

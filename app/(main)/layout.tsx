@@ -6,6 +6,7 @@ import { CurrencyProvider } from "@/components/CurrencyContext";
 import GeoBanner from "@/components/GeoBanner";
 import FooterCurrencySelector from "@/components/FooterCurrencySelector";
 import CookieBanner from "@/components/CookieBanner";
+import CustomCursor from "@/components/CustomCursor";
 
 const cormorant = localFont({
   src: "./fonts/CormorantGaramond.ttf",
@@ -42,7 +43,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cormorant.variable} ${neueHaas.variable} bg-beige text-navy antialiased min-h-screen flex flex-col`}>
+      <body className={`${cormorant.variable} ${neueHaas.variable} bg-beige text-navy antialiased min-h-screen flex flex-col cursor-none`}>
+        <CustomCursor />
         <CurrencyProvider>
           <GeoBanner />
           <CookieBanner />
