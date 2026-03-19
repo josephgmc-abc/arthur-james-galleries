@@ -1,4 +1,4 @@
-import { defineConfig } from "sanity";
+import { defineConfig, buildLegacyTheme } from "sanity";
 import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
@@ -20,7 +20,7 @@ export default defineConfig({
     types: schemaTypes,
   },
 
-  theme: {
+  theme: buildLegacyTheme({
     /* Custom Theme Overrides for Luxury Aesthetic */
     "--black": "#1A1A1A",
     "--white": "#FFFFFF",
@@ -31,7 +31,7 @@ export default defineConfig({
     "--default-button-primary-color": "#C5A059", // Gold
     "--focus-color": "#C5A059",
     "--brand-primary": "#C5A059",
-  },
+  }),
 
   studio: {
     components: {

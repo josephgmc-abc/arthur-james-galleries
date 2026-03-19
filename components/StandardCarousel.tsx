@@ -3,9 +3,10 @@
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ArtworkCard from "./ArtworkCard";
+import { ArtworkType } from "./ArtworkClientView";
 
 interface StandardCarouselProps {
-  artworks: any[];
+  artworks: ArtworkType[];
 }
 
 export default function StandardCarousel({ artworks }: StandardCarouselProps) {

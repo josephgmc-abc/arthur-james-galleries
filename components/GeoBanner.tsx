@@ -17,7 +17,10 @@ export default function GeoBanner() {
   const { showBanner, dismissBanner, detectedCountryName, detectedCountryCode, isInternational, currency } = useCurrency();
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   if (!mounted || !showBanner) return null;
 

@@ -36,7 +36,6 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   const [detectedCountryCode, setDetectedCountryCode] = useState<string | null>(null);
   const [detectedCountryName, setDetectedCountryName] = useState<string | null>(null);
   const [showBanner, setShowBanner] = useState(false);
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const savedCurrency = localStorage.getItem('arthur_james_currency');
@@ -61,12 +60,10 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
             setCurrency(savedCurrency);
           }
         }
-        setIsReady(true);
       })
       .catch(err => {
         console.error(err);
         if (savedCurrency) setCurrency(savedCurrency);
-        setIsReady(true);
       });
   }, []);
 

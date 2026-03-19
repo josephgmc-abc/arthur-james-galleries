@@ -1,6 +1,7 @@
 import ReportCard from "@/components/ReportCard";
 import { dummyReports } from "@/data/reports";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ReportsPage() {
   return (
@@ -78,10 +79,11 @@ export default function ReportsPage() {
            </div>
            <div className="flex-1 w-full relative aspect-[4/5] lg:aspect-square overflow-hidden border-[1.5px] border-white/20 p-4 md:p-6">
               <div className="relative w-full h-full">
-                <img 
+                <Image 
                   src="/images/jessica-pamp-JNTSoyb_bbw-unsplash.jpg" 
                   alt="Private Advisory" 
-                  className="w-full h-full object-cover grayscale opacity-90"
+                  fill
+                  className="object-cover grayscale opacity-90"
                 />
               </div>
            </div>

@@ -1,26 +1,25 @@
-import Image from "next/image";
+import Link from "next/link";
 import Hero from "@/components/Hero";
-import ArtworkCard from "@/components/ArtworkCard";
 import ReportCard from "@/components/ReportCard";
 import StandardCarousel from "@/components/StandardCarousel";
 import { dummyArtworks } from "@/data/artworks";
 
-export default function Home() {
-  const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
+const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
+export default function Home() {
   return (
     <div className="flex flex-col w-full bg-beige">
       <Hero />
-      
+
       {/* Featured Artworks Section */}
       <section className="py-32 bg-beige">
         <div className="flex justify-between items-end mb-16 px-6 md:px-12">
           <h2 className="font-serif text-4xl md:text-5xl">Selected Works</h2>
-          <a href="/artworks" className="font-sans text-xs tracking-widest hover:text-gold transition-colors duration-500 hidden md:block">
+          <Link href="/artworks" className="font-sans text-xs tracking-widest uppercase hover:text-gold transition-colors duration-500 hidden md:block">
             View All Artworks
-          </a>
+          </Link>
         </div>
-        
+
         <StandardCarousel artworks={dummyArtworks.slice(0, 10)} />
       </section>
 
@@ -69,9 +68,9 @@ export default function Home() {
             <span className="font-sans text-[10px] tracking-[0.3em] text-gold uppercase mb-4 block">Global Calendar</span>
             <h2 className="font-serif text-4xl md:text-6xl text-navy">Current & <br /> Upcoming Exhibitions</h2>
           </div>
-          <a href="/exhibitions" className="font-sans text-xs tracking-widest hover:text-gold transition-colors duration-500 hidden md:block border-b-[1.5px] border-navy/30 pb-1">
+          <Link href="/exhibitions" className="font-sans text-xs uppercase tracking-widest hover:text-gold transition-colors duration-500 hidden md:block border-b-[1.5px] border-navy/30 pb-1">
             View Full Schedule
-          </a>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-0">
@@ -116,9 +115,9 @@ export default function Home() {
       <section className="py-32 px-6 md:px-12 bg-navy">
         <div className="flex justify-between items-end mb-16">
           <h2 className="font-serif text-4xl md:text-5xl text-beige">Market Insights</h2>
-          <a href="/reports" className="font-sans text-xs tracking-widest text-beige/50 hover:text-gold transition-colors duration-500 hidden md:block border-b-[1.5px] border-white/20 pb-1">
+          <Link href="/reports" className="font-sans text-xs uppercase tracking-widest text-beige/50 hover:text-gold transition-colors duration-500 hidden md:block border-b-[1.5px] border-white/20 pb-1">
             View All Reports
-          </a>
+          </Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -8,9 +8,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import StandardCarousel from "@/components/StandardCarousel";
 import { useCurrency } from "./CurrencyContext";
 
+export interface ArtworkType {
+  id: string;
+  slug: string;
+  title: string;
+  artist: string;
+  year: string;
+  price: string;
+  imageSrc: string;
+}
+
 interface ArtworkClientViewProps {
-  artwork: any;
-  relatedArtworks: any[];
+  artwork: ArtworkType;
+  relatedArtworks: ArtworkType[];
 }
 
 export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkClientViewProps) {
