@@ -3,7 +3,7 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "project-id-placeholder";
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "kcvm5a8w";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
