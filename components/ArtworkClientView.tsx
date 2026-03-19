@@ -146,7 +146,7 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
           {/* Image Display */}
-          <div data-cursor="view" className="lg:col-span-8 relative flex items-center justify-center bg-white/50 p-8 md:p-16 border border-navy/5 group cursor-none" onClick={() => setIsLightboxOpen(true)}>
+          <div className="lg:col-span-8 relative flex items-center justify-center bg-white/50 p-8 md:p-16 border border-navy/5 group cursor-zoom-in" onClick={() => setIsLightboxOpen(true)}>
             <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 text-navy bg-white/50 p-2 rounded-full backdrop-blur-md">
               <Maximize2 strokeWidth={1} className="w-5 h-5" />
             </div>

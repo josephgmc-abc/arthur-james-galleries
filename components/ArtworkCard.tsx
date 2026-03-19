@@ -17,7 +17,7 @@ export default function ArtworkCard({ title, artist, year, imageSrc, slug, price
   const { formatPrice } = useCurrency();
 
   return (
-    <Link href={`/artworks/${slug}`} data-cursor="discover" className="group cursor-none flex flex-col gap-6">
+    <Link href={`/artworks/${slug}`} className="group cursor-pointer flex flex-col gap-6">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
