@@ -36,7 +36,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="font-serif text-3xl text-navy mb-4">5. Your Rights</h2>
             <p>
-              Under the General Data Protection Regulation (GDPR), you have the right to access, rectify, or erase your personal data held by us. To exercise these rights, please contact our data protection liaison at info@arthurjamesgallery.com.
+              Under the General Data Protection Regulation (GDPR), you have the right to access, rectify, or erase your personal data held by us. To exercise these rights, please contact our data protection liaison at privatesales@arthurjamesadvisory.com.
             </p>
           </section>
 

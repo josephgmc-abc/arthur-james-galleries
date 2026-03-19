@@ -138,12 +138,12 @@ export default function ContactPage() {
             <h3 className="font-serif text-3xl text-navy">London</h3>
             <p className="font-sans text-sm text-charcoal/70 leading-relaxed max-w-xs">
               Arthur James Galleries <br />
-              High Holborn <br />
-              London, WC1V 6BX <br />
-              United Kingdom
+              27 Old Gloucester Rd <br />
+              Holborn, London <br />
+              WC1N 3AX, UK
             </p>
             <p className="font-sans text-sm text-charcoal/70 mt-2">
-              <a href="mailto:info@arthurjamesgallery.com" className="hover:text-gold transition-colors duration-500 border-b-[1.5px] border-navy/20 pb-0.5">info@arthurjamesgallery.com</a>
+              <a href="mailto:privatesales@arthurjamesadvisory.com" className="hover:text-gold transition-colors duration-500 border-b-[1.5px] border-navy/20 pb-0.5">privatesales@arthurjamesadvisory.com</a>
             </p>
           </div>
 
@@ -163,7 +163,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-4 mt-8">
             <span className="font-sans text-[10px] tracking-[0.3em] text-charcoal/40 uppercase">Direct Line</span>
             <p className="font-sans text-lg tracking-widest text-navy">
-              +44 (0) 20 7946 0812
+              +44 (0) 203 603 0441
             </p>
           </div>
         </div>

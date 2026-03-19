@@ -60,20 +60,19 @@ export default function RootLayout({
                   Advisory and curation for dedicated collectors.
                 </p>
                 <p className="font-sans text-sm tracking-widest text-navy">
-                  +44 (0) 20 7946 0812
+                  +44 (0) 203 603 0441
                 </p>
-              </div>
+                </div>
 
-              <div className="lg:col-span-3 flex flex-col gap-4">
+                <div className="lg:col-span-3 flex flex-col gap-4">
                 <span className="font-sans text-[10px] tracking-[0.3em] text-gold uppercase">Head Office</span>
                 <h3 className="font-serif text-2xl text-navy">London</h3>
                 <p className="font-sans text-sm text-charcoal/70 leading-relaxed max-w-xs">
-                  High Holborn <br />
-                  London, WC1V 6BX <br />
-                  United Kingdom
+                  27 Old Gloucester Rd <br />
+                  Holborn, London <br />
+                  WC1N 3AX, UK
                 </p>
-              </div>
-
+                </div>
               <div className="lg:col-span-3 flex flex-col gap-4">
                 <span className="font-sans text-[10px] tracking-[0.3em] text-gold uppercase">Private Viewing</span>
                 <h3 className="font-serif text-2xl text-navy">Kent</h3>

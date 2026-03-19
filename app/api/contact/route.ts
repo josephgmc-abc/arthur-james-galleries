@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     try {
       await resend.emails.send({
         from: 'Arthur James Galleries <inquiries@arthurjamesgallery.com>', // MUST be a verified domain in Resend
-        to: ['info@arthurjamesgallery.com'],
+        to: ['privatesales@arthurjamesadvisory.com'],
         subject: `New Inquiry: ${data.subject} from ${data.firstName} ${data.lastName}`,
         html: `
           <div style="font-family: sans-serif; max-w-xl; margin: 0 auto; padding: 20px; background: #F9F6F0; color: #002244;">
