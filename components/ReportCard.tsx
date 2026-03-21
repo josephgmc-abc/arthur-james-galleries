@@ -19,7 +19,7 @@ export default function ReportCard({ title, summary, date, href, dark = false }:
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className={`p-8 md:p-12 transition-all duration-700 h-full flex flex-col ${
+        className={`p-8 md:p-12 transition-colors duration-700 h-full flex flex-col ${
           dark 
             ? "border-[1.5px] border-white/20 hover:bg-white/5 bg-navy" 
             : "border-[1.5px] border-navy/20 hover:bg-navy hover:text-white"
