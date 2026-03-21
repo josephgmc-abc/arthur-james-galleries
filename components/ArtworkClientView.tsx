@@ -15,6 +15,9 @@ export interface ArtworkType {
   artist: string;
   year: string;
   price: string;
+  medium?: string;
+  dimensions?: string;
+  provenance?: string;
   imageSrc: string;
 }
 
@@ -35,103 +38,159 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
       const { jsPDF } = await import("jspdf");
       const doc = new jsPDF({ format: "a4", unit: "mm" });
       
-      // Add Gallery Header
-      doc.setFont("times", "normal");
-      doc.setFontSize(24);
-      doc.text("Arthur James Galleries", 105, 25, { align: "center" });
-      
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.setTextColor(150, 150, 150);
-      doc.text("PRIVATE & CONFIDENTIAL DOSSIER", 105, 32, { align: "center" });
+      const cormorantBlob = await fetch('/fonts/CormorantGaramond.ttf').then(r => r.blob());
+      const cormorantBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
+        reader.readAsDataURL(cormorantBlob);
+      });
+      doc.addFileToVFS('CormorantGaramond.ttf', cormorantBase64);
+      doc.addFont('CormorantGaramond.ttf', 'CormorantGaramond', 'normal');
 
-      // Add Line
-      doc.setDrawColor(200, 200, 200);
-      doc.line(20, 40, 190, 40);
+      const neueBlob = await fetch('/fonts/NeueHaasGrotText-Roman.ttf').then(r => r.blob());
+      const neueBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
+        reader.readAsDataURL(neueBlob);
+      });
+      doc.addFileToVFS('NeueHaasGrotText-Roman.ttf', neueBase64);
+      doc.addFont('NeueHaasGrotText-Roman.ttf', 'NeueHaasGrotesk', 'normal');
 
-      // Artwork Details
-      doc.setTextColor(20, 20, 20);
-      doc.setFont("times", "normal");
-      doc.setFontSize(32);
-      
-      const splitTitle = doc.splitTextToSize(artwork.title, 170);
-      doc.text(splitTitle, 20, 55);
-      
-      const titleHeight = splitTitle.length * 12;
+      // Helper function to draw the header
+      const drawHeader = () => {
+        doc.setFont("CormorantGaramond", "normal");
+        doc.setFontSize(28);
+        doc.setTextColor(20, 20, 20);
+        doc.text("Arthur James Galleries", 20, 25);
+        
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("PRIVATE & CONFIDENTIAL DOSSIER", 20, 32);
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(12);
-      doc.setTextColor(100, 100, 100);
-      doc.text(`${artwork.artist.toUpperCase()}`, 20, 55 + titleHeight);
-      doc.text(`${artwork.year || "Unknown"}`, 20, 62 + titleHeight);
+        doc.setDrawColor(220, 220, 220);
+        doc.setLineWidth(0.5);
+        doc.line(20, 40, 190, 40);
+      };
 
-      // Details Box
-      const startY = 75 + titleHeight;
-      doc.setFontSize(9);
-      doc.setTextColor(150, 150, 150);
-      doc.text("ESTIMATED PRICE", 20, startY);
-      doc.setTextColor(20, 20, 20);
-      doc.setFont("times", "normal");
-      doc.setFontSize(14);
-      doc.text(formatPrice(artwork.price), 20, startY + 6);
+      // Helper function to draw the footer
+      const drawFooter = () => {
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(180, 180, 180);
+        doc.text("Arthur James Galleries | London & Berlin", 20, 285);
+        doc.text(new Date().getFullYear().toString(), 190, 285, { align: "right" });
+      };
 
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.setTextColor(150, 150, 150);
-      doc.text("MEDIUM", 20, startY + 20);
-      doc.setTextColor(20, 20, 20);
-      doc.setFontSize(10);
-      doc.text("Oil on canvas (Assumed)", 20, startY + 25);
+      // PAGE 1: HERO IMAGE & BASIC INFO & DETAILS
+      drawHeader();
 
-      doc.setFontSize(9);
-      doc.setTextColor(150, 150, 150);
-      doc.text("DIMENSIONS", 20, startY + 35);
-      doc.setTextColor(20, 20, 20);
-      doc.setFontSize(10);
-      doc.text("Contact for dimensions", 20, startY + 40);
-
-      doc.setFontSize(9);
-      doc.setTextColor(150, 150, 150);
-      doc.text("PROVENANCE", 20, startY + 50);
-      doc.setTextColor(20, 20, 20);
-      doc.setFontSize(10);
-      const splitProv = doc.splitTextToSize("Property from a distinguished private collection. Accompanied by a certificate of authenticity.", 170);
-      doc.text(splitProv, 20, startY + 55);
-
-      // Add image to next page
       try {
         const imgBlob = await fetch(artwork.imageSrc).then(r => r.blob());
-        const reader = new FileReader();
-        reader.readAsDataURL(imgBlob);
-        reader.onloadend = function() {
-          const base64data = reader.result as string;
-          doc.addPage();
-          
-          // Basic aspect ratio math to fit A4 (210x297mm) with 20mm margins
-          const maxWidth = 170;
-          const maxHeight = 250;
-          
-          const imgProps = doc.getImageProperties(base64data);
-          const ratio = imgProps.width / imgProps.height;
-          let width = maxWidth;
-          let height = maxWidth / ratio;
-          
-          if (height > maxHeight) {
-            height = maxHeight;
-            width = maxHeight * ratio;
-          }
-          
-          doc.addImage(base64data, 'JPEG', 20 + (maxWidth - width)/2, 20, width, height); 
-          doc.save(`${artwork.slug}-dossier.pdf`);
-          setIsDownloading(false);
+        const base64data = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(imgBlob);
+        });
+
+        // Basic aspect ratio math to fit A4 (210x297mm) with 20mm margins
+        const maxWidth = 170;
+        const maxHeight = 100; // Reduced height to fit everything on one page
+        
+        const imgProps = doc.getImageProperties(base64data);
+        const ratio = imgProps.width / imgProps.height;
+        let width = maxWidth;
+        let height = maxWidth / ratio;
+        
+        if (height > maxHeight) {
+          height = maxHeight;
+          width = maxHeight * ratio;
         }
+        
+        // Center the image horizontally
+        const xOffset = 20 + (maxWidth - width) / 2;
+        const yOffset = 50;
+        
+        doc.addImage(base64data, 'JPEG', xOffset, yOffset, width, height); 
+        
+        // Artist & Title under the image
+        const textY = yOffset + height + 15;
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(12);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`${artwork.artist ? artwork.artist.toUpperCase() : "UNKNOWN ARTIST"}`, 20, textY);
+        
+        doc.setTextColor(20, 20, 20);
+        doc.setFont("CormorantGaramond", "normal");
+        doc.setFontSize(26);
+        const splitTitleHero = doc.splitTextToSize(artwork.title, 170);
+        doc.text(splitTitleHero, 20, textY + 10);
+        
+        const heroTitleHeight = splitTitleHero.length * 10;
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(11);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`${artwork.year || "Unknown"}`, 20, textY + 10 + heroTitleHeight - 2);
+
+        // Details Box - Using a nice grid layout directly below title
+        const startY = textY + 10 + heroTitleHeight + 15;
+        
+        // Left Column (Details)
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("ESTIMATED PRICE", 20, startY);
+        doc.setTextColor(20, 20, 20);
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(14);
+        doc.text(formatPrice(artwork.price), 20, startY + 6);
+
+        doc.setFont("NeueHaasGrotesk", "normal");
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("MEDIUM", 20, startY + 20);
+        doc.setTextColor(20, 20, 20);
+        doc.setFontSize(10);
+        doc.text(artwork.medium || "Contact for medium", 20, startY + 26);
+
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("DIMENSIONS", 20, startY + 40);
+        doc.setTextColor(20, 20, 20);
+        doc.setFontSize(10);
+        doc.text(artwork.dimensions || "Contact for dimensions", 20, startY + 46);
+
+        // Right Column (Provenance & Additional Info)
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("PROVENANCE", 105, startY);
+        doc.setTextColor(20, 20, 20);
+        doc.setFontSize(10);
+        const splitProv = doc.splitTextToSize(artwork.provenance || "Please contact the gallery for provenance information.", 85);
+        doc.text(splitProv, 105, startY + 6);
+        
+        const provHeight = splitProv.length * 5;
+        
+        doc.setFontSize(8);
+        doc.setTextColor(150, 150, 150);
+        doc.text("EXHIBITION HISTORY", 105, startY + provHeight + 15);
+        doc.setTextColor(20, 20, 20);
+        doc.setFontSize(10);
+        const splitExh = doc.splitTextToSize("Please contact the gallery for the complete exhibition history.", 85);
+        doc.text(splitExh, 105, startY + provHeight + 21);
+
+        drawFooter();
+        
+        doc.save(`${artwork.slug}-dossier.pdf`);
+        setIsDownloading(false);
       } catch (e) {
+        console.error("Error generating PDF with image:", e);
+        // Fallback if image fails - just save the text
         doc.save(`${artwork.slug}-dossier.pdf`);
         setIsDownloading(false);
       }
 
     } catch (err) {
-      console.error(err);
+      console.error("Error generating dossier PDF:", err);
       setIsDownloading(false);
     }
   };
@@ -184,18 +243,18 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
               
               <div className="flex flex-col gap-2">
                 <span className="font-sans text-[10px] tracking-widest text-charcoal/50 uppercase">Medium</span>
-                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">Oil on canvas (Assumed)</p>
+                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">{artwork.medium || "Contact for medium"}</p>
               </div>
 
               <div className="flex flex-col gap-2">
                 <span className="font-sans text-[10px] tracking-widest text-charcoal/50 uppercase">Dimensions</span>
-                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">Contact for dimensions</p>
+                <p className="font-sans text-sm text-charcoal/80 leading-relaxed">{artwork.dimensions || "Contact for dimensions"}</p>
               </div>
 
               <div className="flex flex-col gap-2">
                 <span className="font-sans text-[10px] tracking-widest text-charcoal/50 uppercase">Provenance</span>
                 <p className="font-sans text-sm text-charcoal/80 leading-relaxed max-w-sm">
-                  Property from a distinguished private collection. Accompanied by a certificate of authenticity.
+                  {artwork.provenance || "Please contact the gallery for provenance information."}
                 </p>
               </div>
             </div>

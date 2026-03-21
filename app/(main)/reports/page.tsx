@@ -46,10 +46,9 @@ export default async function ReportsPage() {
               Explore our full catalogue of research papers, legislative updates, and secondary market analysis.
             </p>
           </div>
-          <div className="flex flex-wrap gap-4 md:gap-8 font-sans text-xs tracking-widest uppercase text-charcoal/50">
-            <span className="text-navy border-b-[1.5px] border-navy pb-2 cursor-pointer font-medium">All Insights</span>
-            <span className="hover:text-navy border-b-[1.5px] border-transparent hover:border-navy/30 transition-colors cursor-pointer pb-2">Auction Data</span>
-            <span className="hover:text-navy border-b-[1.5px] border-transparent hover:border-navy/30 transition-colors cursor-pointer pb-2">Tax & Legal</span>
+          <div className="flex items-center gap-3 font-sans text-[10px] tracking-widest uppercase text-charcoal/50">
+            <span>Sort by:</span>
+            <span className="text-navy border-b-[1.5px] border-navy pb-1 font-medium">New to Old</span>
           </div>
         </div>
 

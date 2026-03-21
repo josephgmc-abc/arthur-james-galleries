@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   return {
     title: `${artwork.title} by ${artwork.artist} | Arthur James Galleries`,
-    description: `Explore "${artwork.title}" by ${artwork.artist}. Estimated at ${artwork.price}. Property from a distinguished private collection.`,
+    description: `Explore "${artwork.title}" by ${artwork.artist}. Estimated at ${artwork.price}. ${artwork.provenance || ""}`,
     openGraph: {
       title: `${artwork.title} | ${artwork.artist}`,
       description: `Inquire about "${artwork.title}" (${artwork.year}) through Arthur James Galleries.`,

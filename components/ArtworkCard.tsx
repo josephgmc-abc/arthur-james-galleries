@@ -40,7 +40,7 @@ export default function ArtworkCard({ title, artist, year, imageSrc, slug, price
           </div>
           <div className="flex justify-between items-start mt-auto pt-1 gap-4">
             <p className="font-sans text-sm tracking-wide text-charcoal/70 uppercase line-clamp-1">{artist}</p>
-            {price && <p className="font-sans text-[10px] tracking-widest text-charcoal/50 text-right shrink-0 whitespace-nowrap">{formatPrice(price)}</p>}
+            <p className="font-sans text-[10px] tracking-widest text-charcoal/50 text-right shrink-0 whitespace-nowrap">{formatPrice(price)}</p>
           </div>
         </div>
       </motion.div>

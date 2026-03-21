@@ -13,6 +13,9 @@ export async function getArtworks() {
       title,
       "artist": artist->name,
       year,
+      medium,
+      dimensions,
+      "provenance": pt::text(provenance),
       "price": coalesce(estimate, price),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg")
     }`);

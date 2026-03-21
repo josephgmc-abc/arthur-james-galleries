@@ -95,7 +95,22 @@ const run = async () => {
   const artworksData = extractArray(fs.readFileSync('data/artworks.ts', 'utf8'));
   for (const item of artworksData) {
     console.log(`- ${item.title}`);
-    const image = await uploadImage(item.imageSrc);
+    
+    const uploadedImages = [];
+    if (Array.isArray(item.imageSrc)) {
+      for (let i = 0; i < item.imageSrc.length; i++) {
+        const image = await uploadImage(item.imageSrc[i]);
+        if (image) {
+          uploadedImages.push({ ...image, _key: `img-${i}` });
+        }
+      }
+    } else if (item.imageSrc) {
+      const image = await uploadImage(item.imageSrc);
+      if (image) {
+        uploadedImages.push({ ...image, _key: 'img-main' });
+      }
+    }
+    
     const artistRef = artistMap[item.artist];
 
     const doc = {
@@ -103,10 +118,21 @@ const run = async () => {
       title: item.title,
       slug: { _type: 'slug', current: item.slug },
       artist: artistRef ? { _type: 'reference', _ref: artistRef } : undefined,
-      images: image ? [{ ...image, _key: 'img-main' }] : [],
+      images: uploadedImages,
       year: item.year,
-      estimate: item.price,
-      status: 'Available',
+      medium: item.medium,
+      dimensions: item.dimensions,
+      estimate: item.estimate,
+      status: item.status || 'Available',
+      provenance: item.provenance ? [
+        {
+          _key: 'prov1',
+          _type: 'block',
+          children: [{ _key: 'prov_c1', _type: 'span', text: item.provenance }],
+          markDefs: [],
+          style: 'normal',
+        }
+      ] : []
     };
 
     await client.createOrReplace({
