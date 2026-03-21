@@ -3,6 +3,7 @@ import Link from "next/link";
 import Hero from "@/components/Hero";
 import ReportCard from "@/components/ReportCard";
 import StandardCarousel from "@/components/StandardCarousel";
+import SubscribeForm from "@/components/SubscribeForm";
 import { getArtworks, getReports, getExhibitions } from "@/data/api";
 
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
@@ -41,26 +42,7 @@ export default async function Home() {
             Acquisition advice, quarterly performance analysis, and private viewing invitations. Reserved for the discerning collector.
           </p>
           
-          <form className="w-full max-w-xl">
-            <div className="flex flex-col md:flex-row gap-0 border border-beige/20 focus-within:border-gold transition-colors duration-700">
-              <input 
-                type="email" 
-                placeholder="Email address" 
-                className="bg-transparent px-8 py-6 outline-none text-beige font-sans text-sm flex-grow placeholder:text-beige/20 tracking-[0.2em]"
-                required
-              />
-              <button type="submit" className="bg-beige text-navy font-sans text-[10px] tracking-[0.3em] px-12 py-6 hover:bg-gold hover:text-navy transition-all duration-500 whitespace-nowrap border-t md:border-t-0 md:border-l border-beige/10">
-                Subscribe
-              </button>
-            </div>
-            <div className="flex items-center justify-center gap-4 mt-8 opacity-30">
-              <div className="h-[1px] w-8 bg-beige"></div>
-              <p className="font-sans text-[9px] tracking-[0.2em] text-beige">
-                Strict Discretion Assured
-              </p>
-              <div className="h-[1px] w-8 bg-beige"></div>
-            </div>
-          </form>
+          <SubscribeForm />
         </div>
       </section>
 
@@ -106,7 +88,7 @@ export default async function Home() {
           </Link>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-x-8 md:gap-y-16">
           {reports.slice(0, 6).map((report: any) => (
             <ReportCard 
               key={report.slug}
