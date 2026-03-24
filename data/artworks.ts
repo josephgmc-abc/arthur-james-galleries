@@ -8,7 +8,7 @@ export const dummyArtworks = [
     "dimensions": "100cm x 150cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "A striking exploration of feline grace merged with bold street-art textures. This piece captures the enigmatic nature of the alley cat through layers of vibrant acrylic.",
     "imageSrc": ["/images/freddie-peacock/Cat.jpeg"]
   },
   {
@@ -20,7 +20,7 @@ export const dummyArtworks = [
     "dimensions": "100cm x 130cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "A deconstructed homage to 90s minimalism and high-fashion iconography. Peacock overlays raw industrial strokes atop the legendary Calvin Klein aesthetic.",
     "imageSrc": ["/images/freddie-peacock/Kate Moss Calvin Klein.jpeg"]
   },
   {
@@ -32,7 +32,7 @@ export const dummyArtworks = [
     "dimensions": "100cm x 150cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "The intersection of downtown rock royalty and modern streetwear dominance. This work recontextualizes the 'cool' of Lou Reed for the high-velocity generation.",
     "imageSrc": ["/images/freddie-peacock/Supreme x Lou Reed.jpeg"]
   },
   {
@@ -44,7 +44,7 @@ export const dummyArtworks = [
     "dimensions": "100cm x 130cm (Lennon 100cm x 150cm)",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "A multifaceted study of modern British identity and high-fashion heritage. This quartet juxtaposes the timeless Burberry check with the faces of current cultural pioneers.",
     "imageSrc": ["/images/freddie-peacock/Burberry x 4 (1).jpeg", "/images/freddie-peacock/Burberry x 4 (2).jpeg"]
   },
   {
@@ -56,7 +56,7 @@ export const dummyArtworks = [
     "dimensions": "100cm x 150cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "London",
+    "provenance": "An atmospheric tribute to South American urban life, rendered with a sophisticated, moody palette. The canvas vibrates with the low-frequency energy of a city at rest.",
     "imageSrc": ["/images/freddie-peacock/Lima.jpeg"]
   },
   {
@@ -68,7 +68,7 @@ export const dummyArtworks = [
     "dimensions": "Approx 100cm x 130cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "London",
+    "provenance": "A chaotic yet deliberate explosion of pure creative impulse. This work invites the viewer to navigate its labyrinth of subconscious markings and abstract forms.",
     "imageSrc": ["/images/freddie-peacock/Honestly, I don't even know.jpeg"]
   },
   {
@@ -80,7 +80,7 @@ export const dummyArtworks = [
     "dimensions": "Approx A1",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "A sleek, monochromatic dive into refined character study and graphic precision. Part of a limited series that explores the anonymity of contemporary style.",
     "imageSrc": ["/images/freddie-peacock/Mr White Paint, Edition of 23.jpeg"]
   },
   {
@@ -92,7 +92,7 @@ export const dummyArtworks = [
     "dimensions": "70cm x 60cm",
     "estimate": "",
     "status": "Available",
-    "provenance": "London",
+    "provenance": "A hauntingly beautiful portrait that commands the room with its intense gaze. The artist masterfully blends high-contrast silhouettes with subtle urban grit.",
     "imageSrc": ["/images/freddie-peacock/If Looks Could Kill.jpeg"]
   },
   {
@@ -104,7 +104,7 @@ export const dummyArtworks = [
     "dimensions": "70cm x 60cm x 2",
     "estimate": "",
     "status": "Available",
-    "provenance": "London",
+    "provenance": "A dreamlike landscape where urban structures dissolve into ethereal, painterly voids. A poignant reflection on the feeling of being present yet completely lost.",
     "imageSrc": ["/images/freddie-peacock/Somewhere, No where (1).jpeg", "/images/freddie-peacock/Somewhere, No where (2).jpeg"]
   },
   {
@@ -116,7 +116,7 @@ export const dummyArtworks = [
     "dimensions": "A1",
     "estimate": "",
     "status": "Available",
-    "provenance": "Bedford",
+    "provenance": "A powerful, grit-soaked celebration of a boxing legend's enduring spirit. This print captures the kinetic energy and raw determination of the Manchester 'Hitman'.",
     "imageSrc": ["/images/freddie-peacock/Ricky 'Hitman' Hatton - Print Unnumbered Edition.jpeg"]
   }
 ];
