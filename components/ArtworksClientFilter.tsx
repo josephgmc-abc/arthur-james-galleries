@@ -76,6 +76,15 @@ export default function ArtworksClientFilter({ artworks }: { artworks: ArtworkTy
         if (sortOption === "year-asc") return parseYear(a.year) - parseYear(b.year);
         return 0;
       });
+    } else {
+      // Prioritize featured artworks, then artworks by featured artists
+      result.sort((a, b) => {
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        if (a.artistFeatured && !b.artistFeatured) return -1;
+        if (!a.artistFeatured && b.artistFeatured) return 1;
+        return 0;
+      });
     }
 
     return result;

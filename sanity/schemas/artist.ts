@@ -42,5 +42,11 @@ export const artist = defineType({
         },
       ],
     }),
+    defineField({
+      name: "featured",
+      title: "Featured Artist",
+      type: "boolean",
+      initialValue: false,
+    }),
   ],
 });

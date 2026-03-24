@@ -87,5 +87,12 @@ export const artwork = defineType({
       },
       initialValue: "Available",
     }),
+    defineField({
+      name: "featured",
+      title: "Featured Artwork",
+      type: "boolean",
+      initialValue: false,
+      group: "valuation",
+    }),
   ],
 });

@@ -7,17 +7,19 @@ import { dummyExhibitions } from "./exhibitions";
 
 export async function getArtworks() {
   try {
-    const data = await client.fetch(groq`*[_type == "artwork"] | order(_createdAt desc) {
+    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->featured desc, _createdAt desc) {
       "id": _id,
       "slug": slug.current,
       title,
       "artist": artist->name,
+      "artistFeatured": artist->featured,
       year,
       medium,
       dimensions,
       "provenance": pt::text(provenance),
       "price": coalesce(estimate, price),
-      "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg")
+      "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg"),
+      featured
     }`);
     return data && data.length > 0 ? data : dummyArtworks;
   } catch (e) {
@@ -28,11 +30,12 @@ export async function getArtworks() {
 
 export async function getArtists() {
   try {
-    const data = await client.fetch(groq`*[_type == "artist"] | order(name asc) {
+    const data = await client.fetch(groq`*[_type == "artist"] | order(featured desc, name asc) {
       "slug": slug.current,
       name,
       "bio": pt::text(bio),
-      "imageSrc": coalesce(portrait.asset->url, "/images/jessica-pamp-JNTSoyb_bbw-unsplash.jpg")
+      "imageSrc": coalesce(portrait.asset->url, "/images/jessica-pamp-JNTSoyb_bbw-unsplash.jpg"),
+      featured
     }`);
     return data && data.length > 0 ? data : dummyArtists;
   } catch (e) {

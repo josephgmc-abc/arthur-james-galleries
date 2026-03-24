@@ -9,9 +9,15 @@ import { getArtworks, getReports, getExhibitions } from "@/data/api";
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
 export default async function Home() {
-  const artworks = await getArtworks();
+  const allArtworks = await getArtworks();
   const reports = await getReports();
   const exhibitions = await getExhibitions();
+
+  // Prioritize featured artworks and artworks by featured artists for the homepage
+  const featuredArtworks = allArtworks.filter((art: any) => art.featured || art.artistFeatured);
+  
+  // Fallback to all artworks if none are marked featured (to avoid empty section)
+  const displayArtworks = featuredArtworks.length > 0 ? featuredArtworks : allArtworks;
 
   return (
     <div className="flex flex-col w-full bg-beige">
@@ -26,7 +32,7 @@ export default async function Home() {
           </Link>
         </div>
         
-        <StandardCarousel artworks={artworks.slice(0, 10)} />
+        <StandardCarousel artworks={displayArtworks.slice(0, 10)} />
       </section>
 
       <Divider />

@@ -19,6 +19,8 @@ export interface ArtworkType {
   dimensions?: string;
   provenance?: string;
   imageSrc: string;
+  featured?: boolean;
+  artistFeatured?: boolean;
 }
 
 interface ArtworkClientViewProps {

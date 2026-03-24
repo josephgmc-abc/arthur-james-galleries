@@ -5,8 +5,12 @@ import { getArtists } from "@/data/api";
 
 export default async function ArtistsDirectoryPage() {
   const artists = await getArtists();
-  // Sort artists alphabetically
-  const sortedArtists = [...artists].sort((a: any, b: any) => a.name.localeCompare(b.name));
+  // Sort artists: Featured first, then alphabetically
+  const sortedArtists = [...artists].sort((a: any, b: any) => {
+    if (a.featured && !b.featured) return -1;
+    if (!a.featured && b.featured) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">
