@@ -161,24 +161,25 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
         doc.setFontSize(10);
         doc.text(artwork.dimensions || "Contact for dimensions", 20, startY + 46);
 
-        // Right Column (Provenance & Additional Info)
+        // Right Column (Description & Additional Info)
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
-        doc.text("PROVENANCE", 105, startY);
+        doc.text("DESCRIPTION", 105, startY);
         doc.setTextColor(20, 20, 20);
         doc.setFontSize(10);
-        const splitProv = doc.splitTextToSize(artwork.provenance || "Please contact the gallery for provenance information.", 85);
-        doc.text(splitProv, 105, startY + 6);
+        const descriptionText = artwork.provenance || "Reach out to our advisors for more information on the story behind this piece.";
+        const splitDesc = doc.splitTextToSize(descriptionText, 85);
+        doc.text(splitDesc, 105, startY + 6);
         
-        const provHeight = splitProv.length * 5;
+        const descHeight = splitDesc.length * 5;
         
         doc.setFontSize(8);
         doc.setTextColor(150, 150, 150);
-        doc.text("EXHIBITION HISTORY", 105, startY + provHeight + 15);
+        doc.text("EXHIBITION HISTORY", 105, startY + descHeight + 15);
         doc.setTextColor(20, 20, 20);
         doc.setFontSize(10);
         const splitExh = doc.splitTextToSize("Please contact the gallery for the complete exhibition history.", 85);
-        doc.text(splitExh, 105, startY + provHeight + 21);
+        doc.text(splitExh, 105, startY + descHeight + 21);
 
         drawFooter();
         
@@ -254,9 +255,9 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
               </div>
 
               <div className="flex flex-col gap-2">
-                <span className="font-sans text-[10px] tracking-widest text-charcoal/50 uppercase">Provenance</span>
+                <span className="font-sans text-[10px] tracking-widest text-charcoal/50 uppercase">Description</span>
                 <p className="font-sans text-sm text-charcoal/80 leading-relaxed max-w-sm">
-                  {artwork.provenance || "Please contact the gallery for provenance information."}
+                  {artwork.provenance || "Reach out to our advisors for more information on the story behind this piece."}
                 </p>
               </div>
             </div>
