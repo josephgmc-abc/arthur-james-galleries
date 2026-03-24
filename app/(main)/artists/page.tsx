@@ -28,12 +28,12 @@ export default async function ArtistsDirectoryPage() {
         </div>
 
         <div className="relative z-20 max-w-4xl">
-          <span className="font-sans text-[10px] tracking-[0.4em] text-gold uppercase mb-6 block">Our Roster</span>
+          <span className="font-sans text-[10px] tracking-[0.4em] text-gold uppercase mb-6 block">Our Collection</span>
           <h1 className="font-serif text-5xl md:text-8xl text-white mb-8 leading-[1.1] tracking-tight">
-            Represented <br /> Artists
+            Available <br /> Artists
           </h1>
           <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light tracking-wide uppercase">
-            We proudly represent and advise on acquisitions from a highly curated selection of the most significant figures in modern and contemporary art.
+            We advise on acquisitions from a highly curated selection of the most significant figures in modern and contemporary art.
           </p>
         </div>
       </section>
@@ -50,6 +50,11 @@ export default async function ArtistsDirectoryPage() {
                   fill
                   className="object-cover scale-100 group-hover:scale-105 transition-transform duration-[1.5s] ease-[0.16,1,0.3,1] grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100"
                 />
+                {artist.name === "Freddie Peacock" && (
+                  <div className="absolute top-4 right-4 bg-gold text-navy px-3 py-1 font-sans text-[8px] tracking-[0.2em] uppercase z-10">
+                    Represented Artist
+                  </div>
+                )}
               </div>
               <div className="flex justify-between items-baseline border-b-[1.5px] border-navy/20 pb-4">
                 <h3 className="font-serif text-3xl tracking-wide group-hover:text-gold transition-colors duration-500">{artist.name}</h3>

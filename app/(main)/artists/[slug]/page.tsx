@@ -27,7 +27,7 @@ export default async function ArtistProfilePage({ params }: { params: { slug: st
     <div className="flex flex-col w-full bg-beige min-h-screen pt-32 pb-32 px-6 md:px-12">
       <Link href="/artists" className="inline-flex items-center gap-4 text-xs tracking-widest uppercase text-charcoal/50 hover:text-gold transition-colors duration-500 mb-16 w-fit">
         <ArrowLeft strokeWidth={1} className="w-4 h-4" />
-        Back to Artists
+        Back to Available Artists
       </Link>
 
       {/* Artist Profile Section */}
@@ -40,6 +40,11 @@ export default async function ArtistProfilePage({ params }: { params: { slug: st
             className="object-cover grayscale"
             priority
           />
+          {artist.name === "Freddie Peacock" && (
+            <div className="absolute top-4 right-4 bg-gold text-navy px-3 py-1 font-sans text-[8px] tracking-[0.2em] uppercase z-10">
+              Represented Artist
+            </div>
+          )}
         </div>
         
         <div className="lg:col-span-7 flex flex-col justify-center">
