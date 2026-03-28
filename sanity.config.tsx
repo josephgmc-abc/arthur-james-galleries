@@ -18,8 +18,7 @@ const customStructure = (S: any) =>
             .title("The Viewing Room")
             .items([
               S.documentTypeListItem("artwork").title("All Artworks"),
-              S.documentTypeListItem("artist").title("Represented Artists"),
-            ])
+              S.documentTypeListItem("artist").title("Artists"),            ])
         ),
       S.divider(),
       S.listItem()

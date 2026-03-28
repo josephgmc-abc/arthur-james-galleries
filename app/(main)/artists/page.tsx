@@ -45,16 +45,11 @@ export default async function ArtistsDirectoryPage() {
             <Link href={`/artists/${artist.slug}`} key={artist.slug} className="group cursor-pointer flex flex-col gap-6">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-navy/5">
                 <Image
-                  src={artist.imageSrc}
+                  src={artist.artworkThumbnail || artist.imageSrc}
                   alt={artist.name}
                   fill
                   className="object-cover scale-100 group-hover:scale-105 transition-transform duration-[1.5s] ease-[0.16,1,0.3,1] grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100"
                 />
-                {artist.name === "Freddie Peacock" && (
-                  <div className="absolute top-4 right-4 bg-gold text-navy px-3 py-1 font-sans text-[8px] tracking-[0.2em] uppercase z-10">
-                    Represented Artist
-                  </div>
-                )}
               </div>
               <div className="flex justify-between items-baseline border-b-[1.5px] border-navy/20 pb-4">
                 <h3 className="font-serif text-3xl tracking-wide group-hover:text-gold transition-colors duration-500">{artist.name}</h3>

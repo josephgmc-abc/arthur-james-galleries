@@ -60,6 +60,7 @@ export default function StandardCarousel({ artworks }: StandardCarouselProps) {
               imageSrc={artwork.imageSrc}
               slug={artwork.slug}
               price={artwork.price}
+              status={artwork.status}
             />
           </div>
         ))}

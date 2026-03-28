@@ -21,6 +21,7 @@ export interface ArtworkType {
   imageSrc: string;
   featured?: boolean;
   artistFeatured?: boolean;
+  status?: string;
 }
 
 interface ArtworkClientViewProps {

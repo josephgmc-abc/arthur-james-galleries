@@ -40,11 +40,6 @@ export default async function ArtistProfilePage({ params }: { params: { slug: st
             className="object-cover grayscale"
             priority
           />
-          {artist.name === "Freddie Peacock" && (
-            <div className="absolute top-4 right-4 bg-gold text-navy px-3 py-1 font-sans text-[8px] tracking-[0.2em] uppercase z-10">
-              Represented Artist
-            </div>
-          )}
         </div>
         
         <div className="lg:col-span-7 flex flex-col justify-center">
@@ -77,6 +72,7 @@ export default async function ArtistProfilePage({ params }: { params: { slug: st
                 imageSrc={artwork.imageSrc}
                 slug={artwork.slug}
                 price={artwork.price}
+                status={artwork.status}
               />
             ))}
           </div>

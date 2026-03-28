@@ -11,9 +11,10 @@ interface ArtworkCardProps {
   imageSrc: string;
   slug: string;
   price?: string;
+  status?: string;
 }
 
-export default function ArtworkCard({ title, artist, year, imageSrc, slug, price }: ArtworkCardProps) {
+export default function ArtworkCard({ title, artist, year, imageSrc, slug, price, status }: ArtworkCardProps) {
   const { formatPrice } = useCurrency();
 
   return (
@@ -32,6 +33,11 @@ export default function ArtworkCard({ title, artist, year, imageSrc, slug, price
             fill
             className="object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-[0.16,1,0.3,1]"
           />
+          {status === "Sold" && (
+            <div className="absolute top-4 right-4 bg-white/90 text-navy px-3 py-1 font-sans text-[10px] tracking-[0.2em] uppercase z-10 backdrop-blur-sm border border-navy/10">
+              Sold
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-2 flex-grow">
           <div className="flex justify-between items-baseline gap-4">

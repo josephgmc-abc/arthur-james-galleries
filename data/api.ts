@@ -19,7 +19,8 @@ export async function getArtworks() {
       "provenance": pt::text(provenance),
       "price": coalesce(estimate, price),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg"),
-      featured
+      featured,
+      status
     }`);
     return data && data.length > 0 ? data : dummyArtworks;
   } catch (e) {
@@ -35,6 +36,11 @@ export async function getArtists() {
       name,
       "bio": pt::text(bio),
       "imageSrc": coalesce(portrait.asset->url, "/images/jessica-pamp-JNTSoyb_bbw-unsplash.jpg"),
+      "artworkThumbnail": coalesce(
+        *[_type == "artwork" && artist._ref == ^._id && title match "*Calvin Klein*"][0].images[0].asset->url,
+        *[_type == "artwork" && artist._ref == ^._id && title match "*Betelgeuse*"][0].images[0].asset->url,
+        *[_type == "artwork" && artist._ref == ^._id][0].images[0].asset->url
+      ),
       featured
     }`);
     return data && data.length > 0 ? data : dummyArtists;

@@ -127,6 +127,7 @@ export default function ArtworksClientFilter({ artworks }: { artworks: ArtworkTy
                   imageSrc={artwork.imageSrc}
                   slug={artwork.slug}
                   price={artwork.price}
+                  status={artwork.status}
                 />
               </motion.div>
             ))}
