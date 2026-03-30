@@ -2,27 +2,35 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@sanity/client';
 import { Resend } from 'resend';
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "kcvm5a8w";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const token = process.env.SANITY_API_TOKEN;
-
-const client = createClient({
-  projectId,
-  dataset,
-  token,
-  useCdn: false,
-  apiVersion: '2024-03-19',
-});
-
-// Initialize Resend with your API key
-const resend = new Resend(process.env.RESEND_API_KEY || "re_dummykey123456789");
+import { env, validateEnv } from '@/lib/env';
+import { isRateLimited } from '@/lib/rate-limit';
 
 export async function POST(request: Request) {
   try {
+    // 0. Rate Limiting (Prevent Spam)
+    // Limits to 3 enquiries per hour per IP
+    const ip = request.headers.get('x-forwarded-for') || 'anonymous';
+    if (isRateLimited(ip, { limit: 3, windowMs: 3600000 })) {
+      return NextResponse.json(
+        { success: false, message: 'Too many enquiries. Please wait an hour before trying again.' },
+        { status: 429 }
+      );
+    }
+
+    // 1. Validate Environment before proceeding
+    validateEnv();
+
     const data = await request.json();
     
     // 1. Create a new document in the Sanity dataset
+    const client = createClient({
+      projectId: env.sanity.projectId,
+      dataset: env.sanity.dataset,
+      token: env.sanity.token,
+      useCdn: false,
+      apiVersion: '2024-03-19',
+    });
+
     let sanityId = null;
     try {
       const result = await client.create({
@@ -43,6 +51,7 @@ export async function POST(request: Request) {
     }
 
     // 2. Send an email notification to the gallery via Resend
+    const resend = new Resend(env.resend.apiKey);
     try {
       await resend.emails.send({
         from: 'Arthur James Galleries <enquiries@arthurjamesgallery.com>', // MUST be a verified domain in Resend

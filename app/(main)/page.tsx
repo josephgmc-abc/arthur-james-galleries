@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import ReportCard from "@/components/ReportCard";
 import StandardCarousel from "@/components/StandardCarousel";
 import SubscribeForm from "@/components/SubscribeForm";
 import { getArtworks, getReports, getExhibitions } from "@/data/api";
+import { Artwork, Report, Exhibition } from "@/data/types";
 
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
 export default async function Home() {
-  let allArtworks = [];
-  let reports = [];
-  let exhibitions = [];
+  let allArtworks: Artwork[] = [];
+  let reports: Report[] = [];
+  let exhibitions: Exhibition[] = [];
 
   try {
     [allArtworks, reports, exhibitions] = await Promise.all([
@@ -29,7 +29,7 @@ export default async function Home() {
   exhibitions = exhibitions || [];
 
   // Prioritize featured artworks and artworks by featured artists for the homepage
-  const featuredArtworks = allArtworks.filter((art: any) => art.featured || art.artistFeatured);
+  const featuredArtworks = allArtworks.filter((art) => art.featured || art.artistFeatured);
   
   // Fallback to all artworks if none are marked featured (to avoid empty section)
   const displayArtworks = featuredArtworks.length > 0 ? featuredArtworks : allArtworks;

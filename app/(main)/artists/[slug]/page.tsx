@@ -1,26 +1,26 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArtists, getArtworks } from "@/data/api";
 import ArtworkCard from "@/components/ArtworkCard";
 import { ArrowLeft } from "lucide-react";
+import { Artist, Artwork } from "@/data/types";
 
 export default async function ArtistProfilePage({ params }: { params: { slug: string } }) {
   // Wait for params to resolve in Next.js App Router dynamic routes
   const { slug } = await params;
   
-  const artists = await getArtists();
-  const artist = artists.find((item: any) => item.slug === slug);
+  const artists: Artist[] = await getArtists();
+  const artist = artists.find((item) => item.slug === slug);
 
   if (!artist) {
     notFound();
   }
 
-  const artworks = await getArtworks();
+  const artworks: Artwork[] = await getArtworks();
   // Find all artworks associated with this artist
   const artistArtworks = artworks.filter(
-    (artwork: any) => artwork.artist === artist.name
+    (artwork) => artwork.artist === artist.name
   );
 
   return (

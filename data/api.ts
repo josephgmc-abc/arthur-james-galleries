@@ -1,7 +1,8 @@
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
+import { Artwork, Artist, Report, Exhibition } from "./types";
 
-export async function getArtworks() {
+export async function getArtworks(): Promise<Artwork[]> {
   try {
     const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->featured desc, _createdAt desc) {
       "id": _id,
@@ -25,7 +26,7 @@ export async function getArtworks() {
   }
 }
 
-export async function getArtists() {
+export async function getArtists(): Promise<Artist[]> {
   try {
     const data = await client.fetch(groq`*[_type == "artist"] | order(featured desc, name asc) {
       "slug": slug.current,
@@ -46,7 +47,7 @@ export async function getArtists() {
   }
 }
 
-export async function getReports() {
+export async function getReports(): Promise<Report[]> {
   try {
     const data = await client.fetch(groq`*[_type == "report"] | order(publishedAt desc) {
       "slug": slug.current,
@@ -57,7 +58,6 @@ export async function getReports() {
     }`);
     
     if (data && data.length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return data.map((report: any) => {
         const dateObj = new Date(report.date);
         const formattedDate = dateObj.toLocaleDateString('en-US', {
@@ -79,7 +79,7 @@ export async function getReports() {
   }
 }
 
-export async function getExhibitions() {
+export async function getExhibitions(): Promise<Exhibition[]> {
   try {
     const data = await client.fetch(groq`*[_type == "exhibition"] | order(startDate desc) {
       "slug": slug.current,

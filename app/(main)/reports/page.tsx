@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from "next";
 import ReportCard from "@/components/ReportCard";
 import { getReports } from "@/data/api";
 import Link from "next/link";
 import Image from "next/image";
+import { Report } from "@/data/types";
 
 export const metadata: Metadata = {
   title: "Market Intelligence | Arthur James Galleries",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ReportsPage() {
-  const reports = await getReports();
+  const reports: Report[] = await getReports();
 
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">

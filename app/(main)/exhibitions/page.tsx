@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import Image from "next/image";
 import { getExhibitions } from "@/data/api";
+import { Exhibition } from "@/data/types";
 
 export default async function ExhibitionsPage() {
-  const exhibitions = await getExhibitions();
+  const exhibitions: Exhibition[] = await getExhibitions();
 
   return (
     <div className="flex flex-col w-full bg-beige min-h-screen">

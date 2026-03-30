@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from "next/navigation";
 import { getArtworks } from "@/data/api";
 import ArtworkClientView from "@/components/ArtworkClientView";
+import { Artwork } from "@/data/types";
 
 // 1. Dynamic SEO & OpenGraph Generation
 export async function generateMetadata({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  const artworks = await getArtworks();
-  const artwork = artworks.find((item: any) => item.slug === slug);
+  const artworks: Artwork[] = await getArtworks();
+  const artwork = artworks.find((item) => item.slug === slug);
 
   if (!artwork) return { title: "Artwork Not Found | Arthur James Galleries" };
 
@@ -42,8 +42,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 export default async function ArtworkPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  const artworks = await getArtworks();
-  const artwork = artworks.find((item: any) => item.slug === slug);
+  const artworks: Artwork[] = await getArtworks();
+  const artwork = artworks.find((item) => item.slug === slug);
 
   if (!artwork) {
     notFound();
@@ -51,7 +51,7 @@ export default async function ArtworkPage({ params }: { params: { slug: string }
 
   // Find related artworks by the same artist, excluding this exact one
   const relatedArtworks = artworks.filter(
-    (a: any) => a.artist === artwork.artist && a.id !== artwork.id
+    (a) => a.artist === artwork.artist && a.id !== artwork.id
   );
 
   return <ArtworkClientView artwork={artwork} relatedArtworks={relatedArtworks} />;

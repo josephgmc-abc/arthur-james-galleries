@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getArtists } from "@/data/api";
+import { Artist } from "@/data/types";
 
 export const metadata: Metadata = {
   title: "Artists | Arthur James Galleries",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default async function ArtistsPage() {
   const artists = await getArtists();
   // Sort artists: Featured first, then alphabetically
-  const sortedArtists = [...artists].sort((a: any, b: any) => {
+  const sortedArtists = [...artists].sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
     return a.name.localeCompare(b.name);

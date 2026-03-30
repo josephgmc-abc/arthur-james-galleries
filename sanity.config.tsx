@@ -3,8 +3,10 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { schemaTypes } from "./sanity/schemas";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "kcvm5a8w";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
+import { env } from "@/lib/env";
+
+const projectId = env.sanity.projectId;
+const dataset = env.sanity.dataset;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const customStructure = (S: any) =>
