@@ -1,7 +1,7 @@
 export const dummyExhibitions = [
   {
-    slug: "beyond-the-veil",
-    title: "Beyond the Veil: Modern Abstraction",
+    slug: "spring-exhibition-2026",
+    title: "Arthur James Gallery - Spring Exhibition",
     location: "London Head Office, Holborn",
     dates: "April 12 — May 30, 2026",
     type: "In-Person / Private Viewing",
@@ -9,21 +9,21 @@ export const dummyExhibitions = [
     description: "An exclusive presentation focusing on mid-century abstract expressionism. This viewing traces the philosophical development of abstraction as it moved away from purely representational forms towards spiritual and emotional resonances. Key works from our current private inventory will be accessible."
   },
   {
-    slug: "surrealist-legacy",
-    title: "The Surrealist Legacy: Salvador Dalí",
-    location: "Paris Annex, Rue de Seine",
-    dates: "June 15 — August 10, 2026",
-    type: "Curated Retrospective",
+    slug: "artist-talk-chima-padua",
+    title: "Artist Talks: Chima Padua",
+    location: "Digital Access / Zoom",
+    dates: "June 15, 2026",
+    type: "Advisory Exclusive",
     imageSrc: "/images/dannie-jing-3GZlhROZIQg-unsplash.jpg",
-    description: "A comprehensive retrospective examining the lasting impact of Salvador Dalí. Featuring several monumental loans alongside pieces currently available for private acquisition, this exhibition offers a unique opportunity to study the technical mastery and psychological depth of his dreamscapes."
+    description: "Join us for an intimate digital conversation with Chima Padua as we explore the intersection of traditional West African aesthetics and contemporary European design. Padua will discuss his latest series and the conceptual framework behind his evolving practice."
   },
   {
-    slug: "new-horizons",
-    title: "New Horizons: South Asian Masters",
-    location: "Kent Private Viewing Space",
-    dates: "September 05 — October 20, 2026",
+    slug: "artist-talk-freddie-peacock",
+    title: "Artist Talks: Freddie Peacock",
+    location: "Digital Access / Zoom",
+    dates: "July 20, 2026",
     type: "Advisory Exclusive",
     imageSrc: "/images/jessica-pamp-JNTSoyb_bbw-unsplash.jpg",
-    description: "Hosted at our discreet Kent estate, this exclusive viewing presents monumental works by the Progressive Artists' Group and their contemporaries. The presentation highlights the synthesis of indigenous traditions and modernist techniques."
+    description: "An exclusive Zoom presentation with Freddie Peacock. This session offers clients a unique opportunity to engage with Peacock's technical process and the psychological depth of his latest figurative works, preceding our upcoming private inventory update."
   }
 ];

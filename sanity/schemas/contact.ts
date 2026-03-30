@@ -2,7 +2,7 @@ import { defineField, defineType } from "sanity";
 
 export const contact = defineType({
   name: "contact",
-  title: "Contact Inquiries",
+  title: "Contact Enquiries",
   type: "document",
   fields: [
     defineField({
@@ -27,7 +27,7 @@ export const contact = defineType({
     }),
     defineField({
       name: "subject",
-      title: "Subject of Inquiry",
+      title: "Subject of Enquiry",
       type: "string",
     }),
     defineField({
@@ -64,7 +64,7 @@ export const contact = defineType({
     prepare(selection) {
       const { title, subtitle, date } = selection;
       return {
-        title: title || 'New Inquiry',
+        title: title || 'New Enquiry',
         subtitle: `${subtitle} - ${new Date(date).toLocaleDateString()}`
       }
     }

@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { getArtists } from "@/data/api";
 
-export default async function ArtistsDirectoryPage() {
+export const metadata: Metadata = {
+  title: "Artists | Arthur James Galleries",
+  description: "Discover the world-renowned artists represented by Arthur James Galleries. From established masters to emerging visionaries.",
+};
+
+export default async function ArtistsPage() {
   const artists = await getArtists();
   // Sort artists: Featured first, then alphabetically
   const sortedArtists = [...artists].sort((a: any, b: any) => {

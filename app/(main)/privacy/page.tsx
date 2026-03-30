@@ -8,7 +8,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2 className="font-serif text-3xl text-navy mb-4">1. Data Collection</h2>
             <p>
-              Arthur James Galleries is committed to protecting your privacy. We collect personal information, such as your name and email address, only when you voluntarily provide it to us—for example, when subscribing to our Market Report or submitting an inquiry via our contact form.
+              Arthur James Galleries is committed to protecting your privacy. We collect personal information, such as your name and email address, only when you voluntarily provide it to us—for example, when subscribing to our Market Report or submitting an enquiry via our contact form.
             </p>
           </section>
 

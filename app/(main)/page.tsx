@@ -45,7 +45,7 @@ export default async function Home() {
             The 2026 <br /> Market Report.
           </h2>
           <p className="font-sans text-base md:text-lg text-beige/60 mb-16 max-w-xl leading-relaxed font-light">
-            Acquisition advice, quarterly performance analysis, and private viewing invitations. Reserved for the discerning collector.
+            Acquisition advice, quarterly market reviews, and private viewing invitations. Reserved for the discerning collector.
           </p>
           
           <SubscribeForm />

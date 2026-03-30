@@ -31,7 +31,7 @@ interface ArtworkClientViewProps {
 
 export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkClientViewProps) {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { formatPrice } = useCurrency();
 
@@ -265,10 +265,10 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
 
             <div className="flex flex-col gap-4 mt-8">
               <button 
-                onClick={() => setIsInquiryOpen(true)}
+                onClick={() => setIsEnquiryOpen(true)}
                 className="w-full bg-navy text-white px-8 py-5 font-sans text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-500"
               >
-                Inquire About This Work
+                Enquire About This Work
               </button>
               
               <button 
@@ -321,15 +321,15 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
         )}
       </AnimatePresence>
 
-      {/* Slide-Out Inquiry Drawer */}
+      {/* Slide-Out Enquiry Drawer */}
       <AnimatePresence>
-        {isInquiryOpen && (
+        {isEnquiryOpen && (
           <>
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsInquiryOpen(false)}
+              onClick={() => setIsEnquiryOpen(false)}
               className="fixed inset-0 bg-navy/60 backdrop-blur-sm z-[60]"
             />
             <motion.div 
@@ -341,9 +341,9 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
             >
               {/* Drawer Header */}
               <div className="flex justify-between items-center px-8 py-10 border-b-[1.5px] border-navy/10 bg-beige sticky top-0 z-10">
-                <span className="font-serif text-3xl">Inquiry</span>
+                <span className="font-serif text-3xl">Enquiry</span>
                 <button 
-                  onClick={() => setIsInquiryOpen(false)}
+                  onClick={() => setIsEnquiryOpen(false)}
                   className="p-2 text-navy/50 hover:text-gold transition-colors duration-500"
                 >
                   <X strokeWidth={1} className="w-6 h-6" />
@@ -383,7 +383,7 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
                     <textarea rows={4} className="bg-transparent outline-none text-navy font-sans text-sm w-full resize-none" placeholder="I am interested in acquiring this piece..." required></textarea>
                   </div>
                   <button type="submit" className="w-full bg-navy text-white px-8 py-5 font-sans text-xs uppercase tracking-widest hover:bg-gold transition-colors duration-500 mt-4">
-                    Send Inquiry
+                    Send Enquiry
                   </button>
                   <p className="font-sans text-[9px] tracking-widest text-charcoal/40 uppercase text-center mt-2">
                     A director will be in touch shortly.

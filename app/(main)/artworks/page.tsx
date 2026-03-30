@@ -1,6 +1,12 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import { getArtworks } from "@/data/api";
 import ArtworksClientFilter from "@/components/ArtworksClientFilter";
+
+export const metadata: Metadata = {
+  title: "Viewing Room | Arthur James Galleries",
+  description: "Explore our curated collection of contemporary and modern masterpieces. Private acquisitions and bespoke advisory for the dedicated collector.",
+};
 
 export default async function ArtworksPage() {
   const artworks = await getArtworks();

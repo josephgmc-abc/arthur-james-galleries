@@ -15,7 +15,7 @@ export default function TermsOfServicePage() {
           <section>
             <h2 className="font-serif text-3xl text-navy mb-4">2. Advisory Services</h2>
             <p>
-              Arthur James Galleries provides art advisory, acquisition, and curation services. While we provide expert analysis and market intelligence, all investment decisions remain the sole responsibility of the client. Art market valuations are subject to fluctuation, and past performance is not indicative of future results.
+              Arthur James Galleries provides art advisory, acquisition, and curation services. While we provide expert analysis and market intelligence, all acquisition and collection decisions remain the sole responsibility of the client.
             </p>
           </section>
 

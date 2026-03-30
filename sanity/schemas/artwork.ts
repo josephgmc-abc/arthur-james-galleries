@@ -7,7 +7,7 @@ export const artwork = defineType({
   groups: [
     { name: "details", title: "General Details" },
     { name: "physical", title: "Physical Attributes" },
-    { name: "valuation", title: "Valuation & Status" },
+    { name: "acquisition", title: "Acquisition & Status" },
   ],
   fields: [
     defineField({
@@ -69,14 +69,14 @@ export const artwork = defineType({
       name: "estimate",
       title: "Estimate",
       type: "string",
-      group: "valuation",
+      group: "acquisition",
       description: "e.g. 'USD 150,000 - 200,000' or 'Price Upon Request'",
     }),
     defineField({
       name: "status",
       title: "Status",
       type: "string",
-      group: "valuation",
+      group: "acquisition",
       options: {
         list: [
           { title: "Available", value: "Available" },
@@ -92,7 +92,7 @@ export const artwork = defineType({
       title: "Featured Artwork",
       type: "boolean",
       initialValue: false,
-      group: "valuation",
+      group: "acquisition",
     }),
   ],
 });

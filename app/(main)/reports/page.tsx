@@ -1,8 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Metadata } from "next";
 import ReportCard from "@/components/ReportCard";
 import { getReports } from "@/data/api";
 import Link from "next/link";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Market Intelligence | Arthur James Galleries",
+  description: "Proprietary market research and quarterly analysis for the dedicated art collector. Private access to our exclusive archival data.",
+};
 
 export default async function ReportsPage() {
   const reports = await getReports();
@@ -21,7 +27,7 @@ export default async function ReportsPage() {
             playsInline 
             className="w-full h-full object-cover opacity-70"
           >
-            <source src="/videos/market-hero.mp4#t=0,60" type="video/mp4" />
+            <source src="/videos/herovideo.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent z-10 opacity-60" />
         </div>
@@ -32,7 +38,7 @@ export default async function ReportsPage() {
             Market <br /> Intelligence
           </h1>
           <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light tracking-wide uppercase">
-            Proprietary research and quarterly performance analyses for the global collector.
+            Proprietary research and quarterly market reviews for the global collector.
           </p>
         </div>
       </section>
@@ -73,7 +79,7 @@ export default async function ReportsPage() {
               <span className="font-sans text-[10px] tracking-[0.4em] text-gold uppercase mb-8 block">Private Advisory</span>
               <h3 className="font-serif text-5xl md:text-7xl text-beige mb-10 leading-tight">Bespoke <br /> Intelligence</h3>
               <p className="font-sans text-lg text-beige/70 leading-relaxed mb-12 font-light max-w-lg">
-                In addition to our public journal, Arthur James Galleries provides personalised acquisition strategies and portfolio risk-analysis for private family offices.
+                In addition to our public journal, Arthur James Galleries provides personalised acquisition strategies and collection management for private family offices.
               </p>
               <Link href="/contact" className="inline-block bg-beige text-navy px-12 py-6 font-sans text-[10px] tracking-[0.3em] uppercase hover:bg-gold transition-colors duration-500">
                 Discuss Advisory Services

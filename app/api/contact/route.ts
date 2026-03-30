@@ -38,19 +38,19 @@ export async function POST(request: Request) {
       });
       sanityId = result._id;
     } catch (sanityError) {
-      console.error('Failed to log inquiry in Sanity:', sanityError);
+      console.error('Failed to log enquiry in Sanity:', sanityError);
       // We continue to try sending the email even if Sanity fails
     }
 
     // 2. Send an email notification to the gallery via Resend
     try {
       await resend.emails.send({
-        from: 'Arthur James Galleries <inquiries@arthurjamesgallery.com>', // MUST be a verified domain in Resend
+        from: 'Arthur James Galleries <enquiries@arthurjamesgallery.com>', // MUST be a verified domain in Resend
         to: ['info@arthurjamesgallery.com'],
-        subject: `New Inquiry: ${data.subject} from ${data.firstName} ${data.lastName}`,
+        subject: `New Enquiry: ${data.subject} from ${data.firstName} ${data.lastName}`,
         html: `
           <div style="font-family: sans-serif; max-w-xl; margin: 0 auto; padding: 20px; background: #F9F6F0; color: #002244;">
-            <h2 style="font-family: serif; font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #002244; padding-bottom: 10px;">New Gallery Inquiry</h2>
+            <h2 style="font-family: serif; font-size: 24px; margin-bottom: 20px; border-bottom: 1px solid #002244; padding-bottom: 10px;">New Gallery Enquiry</h2>
             <p><strong>Name:</strong> ${data.firstName} ${data.lastName}</p>
             <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #C5A059;">${data.email}</a></p>
             <p><strong>Phone:</strong> ${data.phone || 'Not provided'}</p>

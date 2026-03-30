@@ -107,7 +107,7 @@ export default function Navbar() {
                 : "text-navy border-navy/20 hover:bg-navy hover:text-white"
             }`}
           >
-            Inquire
+            Enquire
           </Link>
           
           <button 
@@ -154,7 +154,7 @@ export default function Navbar() {
                 href="/contact"
                 className="w-full bg-navy text-white text-center py-5 font-sans text-xs tracking-widest uppercase hover:bg-gold transition-colors duration-500"
               >
-                Inquire About Services
+                Enquire About Services
               </Link>
             </div>
           </motion.div>

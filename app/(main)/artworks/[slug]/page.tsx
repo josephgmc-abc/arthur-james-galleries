@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     description: `Explore "${artwork.title}" by ${artwork.artist}. Estimated at ${artwork.price}. ${artwork.provenance || ""}`,
     openGraph: {
       title: `${artwork.title} | ${artwork.artist}`,
-      description: `Inquire about "${artwork.title}" (${artwork.year}) through Arthur James Galleries.`,
+      description: `Enquire about "${artwork.title}" (${artwork.year}) through Arthur James Galleries.`,
       images: [
         {
           url: artwork.imageSrc,

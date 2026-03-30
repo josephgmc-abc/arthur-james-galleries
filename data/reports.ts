@@ -8,13 +8,13 @@ export const dummyReports = [
   {
     slug: "emerging-geographies",
     title: "Emerging Geographies",
-    summary: "Identifying key growth markets in the Asia-Pacific region for mid-career acquisitions.",
+    summary: "Exploring the vibrant cultural landscapes and evolving artistic movements across the Asia-Pacific region.",
     date: "FEBRUARY 28, 2026",
   },
   {
     slug: "post-war-resurgence",
     title: "Post‑War Resurgence",
-    summary: "A deep dive into the recent auction records set by mid-century European abstractionists and what it signals for Q3.",
+    summary: "A deep dive into the enduring influence of mid-century European abstractionists and their philosophical resonance today.",
     date: "FEBRUARY 10, 2026",
   },
   {
@@ -25,26 +25,20 @@ export const dummyReports = [
   },
   {
     slug: "sculpture-spatial-assets",
-    title: "Sculpture & Spatial Assets",
-    summary: "Why large-scale outdoor installations are outperforming traditional two-dimensional works in the current economic climate.",
+    title: "Sculpture & Spatial Form",
+    summary: "Examining the growing prominence of large-scale outdoor installations in contemporary private collections.",
     date: "JANUARY 05, 2026",
   },
   {
     slug: "institutional-shift",
     title: "The Institutional Shift",
-    summary: "How major museums deaccessioning works are creating unprecedented opportunities for private collectors.",
+    summary: "How major museums' evolving curatorial focus is creating new opportunities for private collectors.",
     date: "DECEMBER 14, 2025",
   },
   {
-    slug: "tax-implications-2026",
-    title: "Global Tax Arbitrage in 2026",
-    summary: "Strategic insight into the changing tax legislation across key freeport jurisdictions including Geneva, Luxembourg, and Singapore.",
-    date: "NOVEMBER 30, 2025",
-  },
-  {
     slug: "the-female-gaze",
-    title: "The Female Gaze: Market Re‑evaluation",
-    summary: "Tracking the exponential, long-overdue market correction and surging valuations for mid-20th-century female surrealists.",
+    title: "The Female Gaze: A Re‑evaluation",
+    summary: "Tracking the long-overdue critical recognition and evolving appreciation for mid-20th-century female surrealists.",
     date: "NOVEMBER 15, 2025",
   }
 ];
