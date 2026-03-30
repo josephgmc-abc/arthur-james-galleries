@@ -69,23 +69,41 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
       const { jsPDF } = await import("jspdf");
       const doc = new jsPDF({ format: "a4", unit: "mm" });
       
-      const cormorantBlob = await fetch('/fonts/CormorantGaramond.ttf').then(r => r.blob());
-      const cormorantBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
-        reader.readAsDataURL(cormorantBlob);
-      });
-      doc.addFileToVFS('CormorantGaramond.ttf', cormorantBase64);
-      doc.addFont('CormorantGaramond.ttf', 'CormorantGaramond', 'normal');
+      // Load Cormorant Garamond Regular
+      try {
+        const cormorantBlob = await fetch('/fonts/CormorantGaramond-Regular.ttf').then(r => {
+          if (!r.ok) throw new Error('Cormorant font not found');
+          return r.blob();
+        });
+        const cormorantBase64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
+          reader.readAsDataURL(cormorantBlob);
+        });
+        doc.addFileToVFS('CormorantGaramond-Regular.ttf', cormorantBase64);
+        doc.addFont('CormorantGaramond-Regular.ttf', 'CormorantGaramond', 'normal');
+      } catch (fontErr) {
+        console.warn("Could not load Cormorant font for PDF, using fallback:", fontErr);
+        // jspdf will use default 'times'
+      }
 
-      const neueBlob = await fetch('/fonts/NeueHaasGrotText-Roman.ttf').then(r => r.blob());
-      const neueBase64 = await new Promise<string>((resolve) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
-        reader.readAsDataURL(neueBlob);
-      });
-      doc.addFileToVFS('NeueHaasGrotText-Roman.ttf', neueBase64);
-      doc.addFont('NeueHaasGrotText-Roman.ttf', 'NeueHaasGrotesk', 'normal');
+      // Load Neue Haas Grotesk Roman
+      try {
+        const neueBlob = await fetch('/fonts/NeueHaasGrotText-Roman.ttf').then(r => {
+          if (!r.ok) throw new Error('Neue Haas font not found');
+          return r.blob();
+        });
+        const neueBase64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve((reader.result as string).split(',')[1]);
+          reader.readAsDataURL(neueBlob);
+        });
+        doc.addFileToVFS('NeueHaasGrotText-Roman.ttf', neueBase64);
+        doc.addFont('NeueHaasGrotText-Roman.ttf', 'NeueHaasGrotesk', 'normal');
+      } catch (fontErr) {
+        console.warn("Could not load Neue Haas font for PDF, using fallback:", fontErr);
+        // jspdf will use default 'helvetica'
+      }
 
       // Helper function to draw the header
       const drawHeader = () => {
