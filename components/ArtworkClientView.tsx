@@ -138,7 +138,13 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
 
       // Try to add the image, but don't fail the whole document if it fails
       try {
-        const imgBlob = await fetch(artwork.imageSrc).then(r => {
+        // Use a proxy for external images (Sanity CDN) to avoid CORS issues on deployed sites
+        const isExternal = artwork.imageSrc.startsWith('http');
+        const fetchUrl = isExternal 
+          ? `/api/proxy-image?url=${encodeURIComponent(artwork.imageSrc)}`
+          : artwork.imageSrc;
+
+        const imgBlob = await fetch(fetchUrl).then(r => {
           if (!r.ok) throw new Error("Image not found");
           return r.blob();
         });
