@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, X, Maximize2, X as CloseIcon } from "lucide-react";
+import { ArrowLeft, X, Maximize2, Share2, X as CloseIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import StandardCarousel from "@/components/StandardCarousel";
 import { useCurrency } from "./CurrencyContext";
@@ -33,7 +33,35 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [showShareSuccess, setShowShareSuccess] = useState(false);
   const { formatPrice } = useCurrency();
+
+  const handleShare = async () => {
+    const shareData = {
+      title: `${artwork.title} | ${artwork.artist}`,
+      text: `View "${artwork.title}" by ${artwork.artist} at Arthur James Galleries.`,
+      url: typeof window !== 'undefined' ? window.location.href : '',
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          console.error("Error sharing:", err);
+        }
+      }
+    } else {
+      // Fallback: Copy to clipboard
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        setShowShareSuccess(true);
+        setTimeout(() => setShowShareSuccess(false), 2000);
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    }
+  };
 
   const handleDownloadDossier = async () => {
     try {
@@ -226,10 +254,31 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
 
           {/* Artwork Metadata */}
           <div className="lg:col-span-4 flex flex-col justify-center">
-            <div className="flex flex-col gap-2 mb-12 border-b-[1.5px] border-navy/20 pb-12">
-              <h1 className="font-serif text-4xl md:text-5xl leading-tight mb-4">
-                {artwork.title}
-              </h1>
+            <div className="flex flex-col gap-2 mb-12 border-b-[1.5px] border-navy/20 pb-12 relative">
+              <div className="flex justify-between items-start gap-4">
+                <h1 className="font-serif text-4xl md:text-5xl leading-tight mb-4">
+                  {artwork.title}
+                </h1>
+                <button 
+                  onClick={handleShare}
+                  className="mt-2 p-3 text-navy/40 hover:text-gold border border-navy/10 hover:border-gold rounded-full transition-all duration-500 bg-white/30 backdrop-blur-sm group relative"
+                  aria-label="Share artwork"
+                >
+                  <Share2 strokeWidth={1.2} className="w-5 h-5" />
+                  <AnimatePresence>
+                    {showShareSuccess && (
+                      <motion.span 
+                        initial={{ opacity: 0, y: 10, x: "-50%" }}
+                        animate={{ opacity: 1, y: 0, x: "-50%" }}
+                        exit={{ opacity: 0, y: 10, x: "-50%" }}
+                        className="absolute -top-12 left-1/2 bg-navy text-beige text-[9px] tracking-widest uppercase px-3 py-2 whitespace-nowrap pointer-events-none"
+                      >
+                        Link copied
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+              </div>
               <p className="font-sans text-sm tracking-widest text-charcoal/70 uppercase">
                 {artwork.artist}
               </p>

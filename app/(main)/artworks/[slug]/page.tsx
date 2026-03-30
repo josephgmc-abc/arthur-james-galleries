@@ -9,23 +9,33 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const artworks = await getArtworks();
   const artwork = artworks.find((item: any) => item.slug === slug);
 
-  if (!artwork) return {};
+  if (!artwork) return { title: "Artwork Not Found | Arthur James Galleries" };
+
+  const shareTitle = `${artwork.title} by ${artwork.artist}`;
+  const shareDesc = `Explore this exceptional work from our private collection. ${artwork.medium ? `${artwork.medium}.` : ""} ${artwork.year ? `Year: ${artwork.year}.` : ""}`;
 
   return {
-    title: `${artwork.title} by ${artwork.artist} | Arthur James Galleries`,
-    description: `Explore "${artwork.title}" by ${artwork.artist}. Estimated at ${artwork.price}. ${artwork.provenance || ""}`,
+    title: `${shareTitle} | Arthur James Galleries`,
+    description: shareDesc,
     openGraph: {
-      title: `${artwork.title} | ${artwork.artist}`,
-      description: `Enquire about "${artwork.title}" (${artwork.year}) through Arthur James Galleries.`,
+      title: shareTitle,
+      description: shareDesc,
+      siteName: "Arthur James Galleries",
       images: [
         {
           url: artwork.imageSrc,
           width: 1200,
           height: 630,
-          alt: `${artwork.title} by ${artwork.artist}`,
+          alt: shareTitle,
         },
       ],
-      type: "website",
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: shareTitle,
+      description: shareDesc,
+      images: [artwork.imageSrc],
     },
   };
 }

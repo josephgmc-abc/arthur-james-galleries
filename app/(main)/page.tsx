@@ -9,9 +9,24 @@ import { getArtworks, getReports, getExhibitions } from "@/data/api";
 const Divider = () => <div className="mx-6 md:mx-12 h-[1.5px] bg-navy/20" />;
 
 export default async function Home() {
-  const allArtworks = await getArtworks();
-  const reports = await getReports();
-  const exhibitions = await getExhibitions();
+  let allArtworks = [];
+  let reports = [];
+  let exhibitions = [];
+
+  try {
+    [allArtworks, reports, exhibitions] = await Promise.all([
+      getArtworks(),
+      getReports(),
+      getExhibitions(),
+    ]);
+  } catch (error) {
+    console.error("Home page data fetching failed:", error);
+  }
+
+  // Ensure arrays even if some fail
+  allArtworks = allArtworks || [];
+  reports = reports || [];
+  exhibitions = exhibitions || [];
 
   // Prioritize featured artworks and artworks by featured artists for the homepage
   const featuredArtworks = allArtworks.filter((art: any) => art.featured || art.artistFeatured);

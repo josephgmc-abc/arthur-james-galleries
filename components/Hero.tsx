@@ -60,7 +60,7 @@ export default function Hero() {
         transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
         className="relative z-20 max-w-4xl"
       >
-        <h1 className="text-white text-5xl md:text-8xl leading-[1.1] tracking-tight mb-8">
+        <h1 className="font-serif font-normal text-white text-5xl md:text-8xl leading-[1.1] tracking-tight mb-8">
           Defining <br />
           the legacy of art.
         </h1>

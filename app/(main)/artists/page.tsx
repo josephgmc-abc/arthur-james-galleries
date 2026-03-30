@@ -38,7 +38,7 @@ export default async function ArtistsPage() {
           <h1 className="font-serif text-5xl md:text-8xl text-white mb-8 leading-[1.1] tracking-tight">
             Available <br /> Artists
           </h1>
-          <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light tracking-wide uppercase">
+          <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light">
             We advise on acquisitions from a highly curated selection of the most significant figures in modern and contemporary art.
           </p>
         </div>

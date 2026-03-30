@@ -8,7 +8,23 @@ import FooterCurrencySelector from "@/components/FooterCurrencySelector";
 import CookieBanner from "@/components/CookieBanner";
 
 const cormorant = localFont({
-  src: "./fonts/CormorantGaramond.ttf",
+  src: [
+    {
+      path: "../../public/fonts/CormorantGaramond-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/CormorantGaramond-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/CormorantGaramond-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+  ],
   variable: "--font-cormorant",
   display: "swap",
 });
@@ -16,12 +32,12 @@ const cormorant = localFont({
 const neueHaas = localFont({
   src: [
     {
-      path: "./fonts/NeueHaasGrotText-Roman.otf",
+      path: "../../public/fonts/NeueHaasGrotText-Roman.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "./fonts/NeueHaasGrotText-Medium.otf",
+      path: "../../public/fonts/NeueHaasGrotText-Medium.otf",
       weight: "500",
       style: "normal",
     },

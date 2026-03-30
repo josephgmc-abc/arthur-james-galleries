@@ -1,9 +1,5 @@
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
-import { dummyArtworks } from "./artworks";
-import { dummyArtists } from "./artists";
-import { dummyReports } from "./reports";
-import { dummyExhibitions } from "./exhibitions";
 
 export async function getArtworks() {
   try {
@@ -22,10 +18,10 @@ export async function getArtworks() {
       featured,
       status
     }`);
-    return data && data.length > 0 ? data : dummyArtworks;
+    return data || [];
   } catch (e) {
-    console.error(e);
-    return dummyArtworks;
+    console.error("Error fetching artworks from Sanity:", e);
+    return [];
   }
 }
 
@@ -43,10 +39,10 @@ export async function getArtists() {
       ),
       featured
     }`);
-    return data && data.length > 0 ? data : dummyArtists;
+    return data || [];
   } catch (e) {
-    console.error(e);
-    return dummyArtists;
+    console.error("Error fetching artists from Sanity:", e);
+    return [];
   }
 }
 
@@ -76,10 +72,10 @@ export async function getReports() {
         };
       });
     }
-    return dummyReports;
+    return [];
   } catch (e) {
-    console.error(e);
-    return dummyReports;
+    console.error("Error fetching reports from Sanity:", e);
+    return [];
   }
 }
 
@@ -95,9 +91,9 @@ export async function getExhibitions() {
       "imageSrc": coalesce(image.asset->url, "/images/antenna-jqh0GEvuNBY-unsplash.jpg"),
       "description": pt::text(description)
     }`);
-    return data && data.length > 0 ? data : dummyExhibitions;
+    return data || [];
   } catch (e) {
-    console.error(e);
-    return dummyExhibitions;
+    console.error("Error fetching exhibitions from Sanity:", e);
+    return [];
   }
 }

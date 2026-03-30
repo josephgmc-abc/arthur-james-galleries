@@ -16,8 +16,8 @@ const config: Config = {
         gold: "#C5A059",
       },
       fontFamily: {
-        serif: ["var(--font-cormorant)", "serif"],
-        sans: ["var(--font-neue-haas)", "sans-serif"],
+        serif: ["var(--font-cormorant)", "Georgia", "serif"],
+        sans: ["var(--font-neue-haas)", "Helvetica", "Arial", "sans-serif"],
       },
     },
   },

@@ -37,7 +37,7 @@ export default async function ReportsPage() {
           <h1 className="font-serif text-5xl md:text-8xl text-white mb-8 leading-[1.1] tracking-tight">
             Market <br /> Intelligence
           </h1>
-          <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light tracking-wide uppercase">
+          <p className="font-sans text-sm md:text-base text-white/80 max-w-lg leading-relaxed font-light">
             Proprietary research and quarterly market reviews for the global collector.
           </p>
         </div>
