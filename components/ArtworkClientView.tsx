@@ -134,18 +134,22 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
       // PAGE 1: HERO IMAGE & BASIC INFO & DETAILS
       drawHeader();
 
+      let currentY = 50;
+
+      // Try to add the image, but don't fail the whole document if it fails
       try {
-        const imgBlob = await fetch(artwork.imageSrc).then(r => r.blob());
+        const imgBlob = await fetch(artwork.imageSrc).then(r => {
+          if (!r.ok) throw new Error("Image not found");
+          return r.blob();
+        });
         const base64data = await new Promise<string>((resolve) => {
           const reader = new FileReader();
           reader.onloadend = () => resolve(reader.result as string);
           reader.readAsDataURL(imgBlob);
         });
 
-        // Basic aspect ratio math to fit A4 (210x297mm) with 20mm margins
         const maxWidth = 170;
-        const maxHeight = 100; // Reduced height to fit everything on one page
-        
+        const maxHeight = 100;
         const imgProps = doc.getImageProperties(base64data);
         const ratio = imgProps.width / imgProps.height;
         let width = maxWidth;
@@ -156,89 +160,82 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
           width = maxHeight * ratio;
         }
         
-        // Center the image horizontally
         const xOffset = 20 + (maxWidth - width) / 2;
-        const yOffset = 50;
-        
-        doc.addImage(base64data, 'JPEG', xOffset, yOffset, width, height); 
-        
-        // Artist & Title under the image
-        const textY = yOffset + height + 15;
-        doc.setFont("NeueHaasGrotesk", "normal");
-        doc.setFontSize(12);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`${artwork.artist ? artwork.artist.toUpperCase() : "UNKNOWN ARTIST"}`, 20, textY);
-        
-        doc.setTextColor(20, 20, 20);
-        doc.setFont("CormorantGaramond", "normal");
-        doc.setFontSize(26);
-        const splitTitleHero = doc.splitTextToSize(artwork.title, 170);
-        doc.text(splitTitleHero, 20, textY + 10);
-        
-        const heroTitleHeight = splitTitleHero.length * 10;
-        doc.setFont("NeueHaasGrotesk", "normal");
-        doc.setFontSize(11);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`${artwork.year || "Unknown"}`, 20, textY + 10 + heroTitleHeight - 2);
-
-        // Details Box - Using a nice grid layout directly below title
-        const startY = textY + 10 + heroTitleHeight + 15;
-        
-        // Left Column (Details)
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("ESTIMATED PRICE", 20, startY);
-        doc.setTextColor(20, 20, 20);
-        doc.setFont("NeueHaasGrotesk", "normal");
-        doc.setFontSize(14);
-        doc.text(formatPrice(artwork.price), 20, startY + 6);
-
-        doc.setFont("NeueHaasGrotesk", "normal");
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("MEDIUM", 20, startY + 20);
-        doc.setTextColor(20, 20, 20);
-        doc.setFontSize(10);
-        doc.text(artwork.medium || "Contact for medium", 20, startY + 26);
-
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("DIMENSIONS", 20, startY + 40);
-        doc.setTextColor(20, 20, 20);
-        doc.setFontSize(10);
-        doc.text(artwork.dimensions || "Contact for dimensions", 20, startY + 46);
-
-        // Right Column (Description & Additional Info)
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("DESCRIPTION", 105, startY);
-        doc.setTextColor(20, 20, 20);
-        doc.setFontSize(10);
-        const descriptionText = artwork.provenance || "Reach out to our advisors for more information on the story behind this piece.";
-        const splitDesc = doc.splitTextToSize(descriptionText, 85);
-        doc.text(splitDesc, 105, startY + 6);
-        
-        const descHeight = splitDesc.length * 5;
-        
-        doc.setFontSize(8);
-        doc.setTextColor(150, 150, 150);
-        doc.text("EXHIBITION HISTORY", 105, startY + descHeight + 15);
-        doc.setTextColor(20, 20, 20);
-        doc.setFontSize(10);
-        const splitExh = doc.splitTextToSize("Please contact the gallery for the complete exhibition history.", 85);
-        doc.text(splitExh, 105, startY + descHeight + 21);
-
-        drawFooter();
-        
-        doc.save(`${artwork.slug}-dossier.pdf`);
-        setIsDownloading(false);
+        doc.addImage(base64data, 'JPEG', xOffset, currentY, width, height); 
+        currentY += height + 15;
       } catch (e) {
-        console.error("Error generating PDF with image:", e);
-        // Fallback if image fails - just save the text
-        doc.save(`${artwork.slug}-dossier.pdf`);
-        setIsDownloading(false);
+        console.warn("Could not include image in PDF:", e);
+        currentY += 10; // Add small spacing since image is missing
       }
 
+      // Details section - outside the image try/catch so it ALWAYS renders
+      doc.setFont("NeueHaasGrotesk", "normal");
+      doc.setFontSize(12);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`${artwork.artist ? artwork.artist.toUpperCase() : "UNKNOWN ARTIST"}`, 20, currentY);
+      
+      doc.setTextColor(20, 20, 20);
+      doc.setFont("CormorantGaramond", "normal");
+      doc.setFontSize(26);
+      const splitTitleHero = doc.splitTextToSize(artwork.title, 170);
+      doc.text(splitTitleHero, 20, currentY + 10);
+      
+      const heroTitleHeight = splitTitleHero.length * 10;
+      doc.setFont("NeueHaasGrotesk", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`${artwork.year || "Unknown"}`, 20, currentY + 10 + heroTitleHeight - 2);
+
+      // Details Box
+      const startY = currentY + 10 + heroTitleHeight + 15;
+      
+      // Left Column (Details)
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("ESTIMATED PRICE", 20, startY);
+      doc.setTextColor(20, 20, 20);
+      doc.setFont("NeueHaasGrotesk", "normal");
+      doc.setFontSize(14);
+      doc.text(formatPrice(artwork.price), 20, startY + 6);
+
+      doc.setFont("NeueHaasGrotesk", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("MEDIUM", 20, startY + 20);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      doc.text(artwork.medium || "Contact for medium", 20, startY + 26);
+
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("DIMENSIONS", 20, startY + 40);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      doc.text(artwork.dimensions || "Contact for dimensions", 20, startY + 46);
+
+      // Right Column (Description & Additional Info)
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("DESCRIPTION", 105, startY);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      const descriptionText = artwork.provenance || "Reach out to our advisors for more information on the story behind this piece.";
+      const splitDesc = doc.splitTextToSize(descriptionText, 85);
+      doc.text(splitDesc, 105, startY + 6);
+      
+      const descHeight = splitDesc.length * 5;
+      
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text("EXHIBITION HISTORY", 105, startY + descHeight + 15);
+      doc.setTextColor(20, 20, 20);
+      doc.setFontSize(10);
+      const splitExh = doc.splitTextToSize("Please contact the gallery for the complete exhibition history.", 85);
+      doc.text(splitExh, 105, startY + descHeight + 21);
+
+      drawFooter();
+      doc.save(`${artwork.slug}-dossier.pdf`);
+      setIsDownloading(false);
     } catch (err) {
       console.error("Error generating dossier PDF:", err);
       setIsDownloading(false);
