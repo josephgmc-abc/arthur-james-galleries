@@ -1,8 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { useCurrency } from "./CurrencyContext";
+import SafeImage from "./SafeImage";
 
 interface ArtworkCardProps {
   title: string;
@@ -27,11 +27,11 @@ export default function ArtworkCard({ title, artist, year, imageSrc, slug, price
         className="flex flex-col gap-6 h-full"
       >
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-navy/5">
-          <Image
+          <SafeImage
             src={imageSrc}
             alt={title}
             fill
-            className="object-cover scale-100 group-hover:scale-105 transition-transform duration-1000 ease-[0.16,1,0.3,1]"
+            className="object-cover scale-100 group-hover:scale-105"
           />
           {status === "Sold" && (
             <div className="absolute top-4 right-4 bg-white/90 text-navy px-3 py-1 font-sans text-[10px] tracking-[0.2em] uppercase z-10 backdrop-blur-sm border border-navy/10">

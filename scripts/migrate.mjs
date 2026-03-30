@@ -87,7 +87,7 @@ async function migrateExhibitions() {
       endDate: "2026-06-15",
       type: "Advisory Exclusive",
       imageSrc: "/images/dannie-jing-3GZlhROZIQg-unsplash.jpg",
-      description: "Join us for an intimate digital conversation with Chima Padua as we explore the intersection of traditional West African aesthetics and contemporary European design. Padua will discuss his latest series and the conceptual framework behind his evolving practice."
+      description: "Join us for an intimate digital conversation with Chima Padua as we explore the intersection of conceptual materiality and contemporary aesthetics. Padua will discuss his latest series and the philosophical framework behind his evolving practice."
     },
     {
       slug: "artist-talk-freddie-peacock",

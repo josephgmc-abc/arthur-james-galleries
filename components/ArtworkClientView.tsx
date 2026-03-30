@@ -7,6 +7,7 @@ import { ArrowLeft, X, Maximize2, Share2, X as CloseIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import StandardCarousel from "@/components/StandardCarousel";
 import { useCurrency } from "./CurrencyContext";
+import SafeImage from "./SafeImage";
 
 export interface ArtworkType {
   id: string;
@@ -263,7 +264,7 @@ export default function ArtworkClientView({ artwork, relatedArtworks }: ArtworkC
               <Maximize2 strokeWidth={1} className="w-5 h-5" />
             </div>
             <div className="relative w-full aspect-[4/5] lg:aspect-auto lg:h-[80vh] overflow-hidden">
-              <Image
+              <SafeImage
                 src={artwork.imageSrc}
                 alt={artwork.title}
                 fill
