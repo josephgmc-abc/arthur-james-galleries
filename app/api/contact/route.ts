@@ -53,8 +53,10 @@ export async function POST(request: Request) {
     // 2. Send an email notification to the gallery via Resend
     const resend = new Resend(env.resend.apiKey);
     try {
-      await resend.emails.send({
-        from: 'Arthur James Galleries <enquiries@arthurjamesgallery.com>', // MUST be a verified domain in Resend
+      // NOTE: Using onboarding@resend.dev because arthurjamesgallery.com might not be verified yet.
+      // Once verified, change back to: enquiries@arthurjamesgallery.com
+      const emailResult = await resend.emails.send({
+        from: 'Arthur James Galleries <onboarding@resend.dev>', 
         to: ['info@arthurjamesgallery.com'],
         subject: `New Enquiry: ${data.subject} from ${data.firstName} ${data.lastName}`,
         html: `
@@ -71,11 +73,16 @@ export async function POST(request: Request) {
           </div>
         `
       });
-    } catch (emailError) {
-      console.error('Failed to send email via Resend:', emailError);
-      // If there's an API key error but Sanity succeeded, we still return success to the user
+
+      if (emailResult.error) {
+        console.error('Resend API Error details:', emailResult.error);
+        throw new Error(emailResult.error.message);
+      }
+    } catch (emailError: any) {
+      console.error('Detailed Email Error:', emailError);
+      // If Sanity also failed, we must throw
       if (!sanityId) {
-        throw new Error('Both database logging and email notification failed.');
+        throw new Error(`Submission failed: ${emailError.message}`);
       }
     }
 
