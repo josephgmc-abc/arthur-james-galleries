@@ -111,7 +111,7 @@ export default function RootLayout({
               <div className="lg:col-span-2 flex flex-col lg:items-end gap-4 text-[10px] tracking-[0.2em] text-charcoal/60 mt-1">
                 <FooterCurrencySelector />
                 <a href="/contact" className="hover:text-gold transition-colors duration-500">Contact Us</a>
-                <a href="/terms" className="hover:text-gold transition-colors duration-500">Terms of Service</a>
+                <a href="/terms" className="hover:text-gold transition-colors duration-500">Terms & Conditions of Sale</a>
                 <a href="/privacy" className="hover:text-gold transition-colors duration-500">Privacy Policy</a>
               </div>
             </div>
