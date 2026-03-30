@@ -48,7 +48,7 @@ const neueHaas = localFont({
 
 export const metadata: Metadata = {
   title: "Arthur James Galleries | Bespoke Art Advisory",
-  description: "Ultra-professional digital art gallery and bespoke advisory for dedicated collectors.",
+  description: "Independent advisory and curation for established collections and private institutions.",
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
