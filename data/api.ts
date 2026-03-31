@@ -17,7 +17,9 @@ export async function getArtworks(): Promise<Artwork[]> {
       "price": coalesce(estimate, price),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg"),
       featured,
-      status
+      status,
+      lotNumber,
+      source
     }`);
     return data || [];
   } catch (e) {

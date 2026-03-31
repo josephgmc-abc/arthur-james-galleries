@@ -11,6 +11,27 @@ export const artwork = defineType({
   ],
   fields: [
     defineField({
+      name: "lotNumber",
+      title: "Lot / Inventory Number",
+      type: "string",
+      group: "details",
+      description: "A unique identifier for this artwork (e.g., AJ-001 or GG-001).",
+      validation: (Rule) => Rule.unique(),
+    }),
+    defineField({
+      name: "source",
+      title: "Import Source",
+      type: "string",
+      group: "details",
+      options: {
+        list: [
+          { title: "Arthur James Import", value: "arthur-james" },
+          { title: "Galerie Gleis (Scrape)", value: "galerie-gleis" },
+        ],
+      },
+      initialValue: "arthur-james",
+    }),
+    defineField({
       name: "title",
       title: "Title",
       type: "string",

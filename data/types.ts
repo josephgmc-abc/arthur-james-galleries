@@ -21,6 +21,8 @@ export interface Artwork {
   imageSrc: string;
   featured: boolean;
   status: string;
+  lotNumber?: string;
+  source?: string;
 }
 
 export interface Report {
