@@ -40,33 +40,50 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedCurrency = localStorage.getItem('arthur_james_currency');
     const bannerDismissed = localStorage.getItem('arthur_james_banner_dismissed');
+    const cachedGeo = localStorage.getItem('arthur_james_geo');
     
     if (savedCurrency) {
       setCurrency(savedCurrency);
     }
 
-    fetch('https://ipapi.co/json/')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.country_code) {
-          const country = data.country_code;
-          setDetectedCountryCode(country);
-          setDetectedCountryName(data.country_name || country);
-          const detectedCurrency = countryCurrencyMap[country];
-          
-          if (!savedCurrency && detectedCurrency) {
-            setCurrency(detectedCurrency);
-          }
-          
-          // Only show banner if not already dismissed in this OR previous sessions
-          if (bannerDismissed !== 'true') {
-            setShowBanner(true);
-          }
+    // Process geo data and decide whether to show banner
+    const processGeo = (data: any) => {
+      if (data && data.country_code) {
+        const country = data.country_code;
+        setDetectedCountryCode(country);
+        setDetectedCountryName(data.country_name || country);
+        const detectedCurrency = countryCurrencyMap[country];
+        
+        if (!savedCurrency && detectedCurrency) {
+          setCurrency(detectedCurrency);
         }
-      })
-      .catch(err => {
-        console.error(err);
-      });
+        
+        // Show banner only if it has never been dismissed
+        if (bannerDismissed !== 'true') {
+          setShowBanner(true);
+        }
+      }
+    };
+
+    if (cachedGeo) {
+      try {
+        processGeo(JSON.parse(cachedGeo));
+      } catch (e) {
+        localStorage.removeItem('arthur_james_geo');
+      }
+    } else {
+      fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => {
+          if (data && !data.error) {
+            localStorage.setItem('arthur_james_geo', JSON.stringify(data));
+            processGeo(data);
+          }
+        })
+        .catch(err => {
+          console.error('Geo lookup failed:', err);
+        });
+    }
   }, []);
 
   const handleSetCurrency = (c: string) => {
