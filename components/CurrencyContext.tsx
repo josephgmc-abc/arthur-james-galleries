@@ -41,6 +41,10 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     const savedCurrency = localStorage.getItem('arthur_james_currency');
     const bannerDismissed = localStorage.getItem('arthur_james_banner_dismissed');
     
+    if (savedCurrency) {
+      setCurrency(savedCurrency);
+    }
+
     fetch('https://ipapi.co/json/')
       .then(res => res.json())
       .then(data => {
@@ -50,22 +54,18 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
           setDetectedCountryName(data.country_name || country);
           const detectedCurrency = countryCurrencyMap[country];
           
-          if (!savedCurrency) {
-            if (detectedCurrency) {
-              setCurrency(detectedCurrency);
-            } else {
-              setCurrency('USD');
-            }
-            if (!bannerDismissed) setShowBanner(true);
-          } else {
-            setCurrency(savedCurrency);
-            if (!bannerDismissed) setShowBanner(true);
+          if (!savedCurrency && detectedCurrency) {
+            setCurrency(detectedCurrency);
+          }
+          
+          // Only show banner if not already dismissed in this OR previous sessions
+          if (bannerDismissed !== 'true') {
+            setShowBanner(true);
           }
         }
       })
       .catch(err => {
         console.error(err);
-        if (savedCurrency) setCurrency(savedCurrency);
       });
   }, []);
 
