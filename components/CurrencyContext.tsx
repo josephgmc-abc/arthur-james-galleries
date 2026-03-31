@@ -39,6 +39,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedCurrency = localStorage.getItem('arthur_james_currency');
+    const bannerDismissed = localStorage.getItem('arthur_james_banner_dismissed');
     
     fetch('https://ipapi.co/json/')
       .then(res => res.json())
@@ -55,9 +56,10 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
             } else {
               setCurrency('USD');
             }
-            setShowBanner(true);
+            if (!bannerDismissed) setShowBanner(true);
           } else {
             setCurrency(savedCurrency);
+            if (!bannerDismissed) setShowBanner(true);
           }
         }
       })
@@ -71,6 +73,12 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
     setCurrency(c);
     localStorage.setItem('arthur_james_currency', c);
     setShowBanner(false);
+    localStorage.setItem('arthur_james_banner_dismissed', 'true');
+  };
+
+  const dismissBanner = () => {
+    setShowBanner(false);
+    localStorage.setItem('arthur_james_banner_dismissed', 'true');
   };
 
   const formatPrice = (priceStr?: string) => {
@@ -110,7 +118,7 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
       detectedCountryCode, 
       detectedCountryName,
       isInternational,
-      dismissBanner: () => setShowBanner(false), 
+      dismissBanner, 
       showBanner 
     }}>
       {children}
