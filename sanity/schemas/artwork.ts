@@ -16,7 +16,6 @@ export const artwork = defineType({
       type: "string",
       group: "details",
       description: "A unique identifier for this artwork (e.g., AJ-001 or GG-001).",
-      validation: (Rule) => Rule.unique(),
     }),
     defineField({
       name: "source",
