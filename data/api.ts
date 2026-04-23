@@ -3,10 +3,14 @@ import { groq } from "next-sanity";
 import { Artwork, Artist, Report, Exhibition } from "./types";
 export async function getArtworks(): Promise<Artwork[]> {
   try {
-    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->name asc, _createdAt asc) {
+    const data = await client.fetch(groq`*[_type == "artwork"] | order(
+      artist->name == "Freddie Peacock" desc,
+      artist->name == "Chima Padua" desc,
+      artist->name asc,
+      _createdAt asc
+    ) {
       "id": _id,
       "slug": slug.current,
-...
       title,
       "artist": artist->name,
       "artistFeatured": artist->featured,
@@ -14,7 +18,7 @@ export async function getArtworks(): Promise<Artwork[]> {
       medium,
       dimensions,
       "provenance": pt::text(provenance),
-      "price": coalesce(estimate, price, "Price Upon Request"),
+      "price": coalesce(estimate, price, "Price on Request"),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg"),
       featured,
       status,
