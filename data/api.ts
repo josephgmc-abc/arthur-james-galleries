@@ -1,12 +1,12 @@
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
 import { Artwork, Artist, Report, Exhibition } from "./types";
-
 export async function getArtworks(): Promise<Artwork[]> {
   try {
-    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->featured desc, _createdAt asc) {
+    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->name asc, _createdAt asc) {
       "id": _id,
       "slug": slug.current,
+...
       title,
       "artist": artist->name,
       "artistFeatured": artist->featured,

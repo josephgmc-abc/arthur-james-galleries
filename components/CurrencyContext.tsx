@@ -100,9 +100,9 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
 
   const formatPrice = (priceStr?: string) => {
     // Keep internal price data for filtering/sorting if needed, 
-    // but the user wants EVERYTHING on the website to show as POA/Request.
-    if (!priceStr) return 'Price Upon Request';
-    return 'POA';
+    // but the user wants EVERYTHING on the website to show as Price on Request.
+    if (!priceStr) return 'Price on Request';
+    return 'Price on Request';
   };
 
   const isInternational = detectedCountryCode ? !countryCurrencyMap[detectedCountryCode] : true;
