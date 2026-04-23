@@ -4,7 +4,7 @@ import { Artwork, Artist, Report, Exhibition } from "./types";
 
 export async function getArtworks(): Promise<Artwork[]> {
   try {
-    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->featured desc, _createdAt desc) {
+    const data = await client.fetch(groq`*[_type == "artwork"] | order(featured desc, artist->featured desc, _createdAt asc) {
       "id": _id,
       "slug": slug.current,
       title,
@@ -14,7 +14,7 @@ export async function getArtworks(): Promise<Artwork[]> {
       medium,
       dimensions,
       "provenance": pt::text(provenance),
-      "price": coalesce(estimate, price),
+      "price": coalesce(estimate, price, "Price Upon Request"),
       "imageSrc": coalesce(images[0].asset->url, "/images/michael-matloka-4a7K9tI_XFs-unsplash.jpg"),
       featured,
       status,

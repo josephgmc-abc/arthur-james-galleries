@@ -99,27 +99,10 @@ export function CurrencyProvider({ children }: { children: React.ReactNode }) {
   };
 
   const formatPrice = (priceStr?: string) => {
-    if (!priceStr || priceStr.toLowerCase().includes('request')) return 'Price Upon Request';
-    
-    const match = priceStr.match(/([A-Z]{3})\s*([\d,]+)\s*-\s*([\d,]+)/i) || priceStr.match(/([A-Z]{3})\s*([\d,]+)/i);
-    
-    if (!match) return priceStr;
-
-    const baseCurrency = match[1].toUpperCase();
-    if (!rates[baseCurrency] || !rates[currency]) return priceStr;
-
-    const convert = (valStr: string) => {
-      const val = parseInt(valStr.replace(/,/g, ''), 10);
-      const inUSD = val / rates[baseCurrency];
-      const inTarget = inUSD * rates[currency];
-      return Math.round(inTarget).toLocaleString();
-    };
-
-    if (match.length === 4) {
-       return `${currency} ${convert(match[2])} - ${convert(match[3])}`;
-    } else {
-       return `${currency} ${convert(match[2])}`;
-    }
+    // Keep internal price data for filtering/sorting if needed, 
+    // but the user wants EVERYTHING on the website to show as POA/Request.
+    if (!priceStr) return 'Price Upon Request';
+    return 'POA';
   };
 
   const isInternational = detectedCountryCode ? !countryCurrencyMap[detectedCountryCode] : true;

@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Discover the world-renowned artists represented by Arthur James Galleries. From established masters to emerging visionaries.",
 };
 
+export const revalidate = 0;
+
 export default async function ArtistsPage() {
   const artists = await getArtists();
   // Sort artists: Featured first, then alphabetically

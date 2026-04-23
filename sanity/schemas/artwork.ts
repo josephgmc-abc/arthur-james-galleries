@@ -86,6 +86,13 @@ export const artwork = defineType({
       of: [{ type: "block" }],
     }),
     defineField({
+      name: "price",
+      title: "Internal Price",
+      type: "string",
+      group: "acquisition",
+      description: "For internal records only. Not displayed on the website.",
+    }),
+    defineField({
       name: "estimate",
       title: "Estimate",
       type: "string",

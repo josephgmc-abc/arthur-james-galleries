@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   description: "Explore our curated collection of contemporary and modern masterpieces. Private acquisitions and bespoke advisory for the dedicated collector.",
 };
 
+export const revalidate = 0;
+
 export default async function ArtworksPage() {
   const artworks = await getArtworks();
 
