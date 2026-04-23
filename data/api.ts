@@ -4,8 +4,11 @@ import { Artwork, Artist, Report, Exhibition } from "./types";
 export async function getArtworks(): Promise<Artwork[]> {
   try {
     const data = await client.fetch(groq`*[_type == "artwork"] | order(
-      artist->name == "Freddie Peacock" desc,
-      artist->name == "Chima Padua" desc,
+      select(
+        artist->name == "Freddie Peacock" => 0,
+        artist->name == "Chima Padua" => 1,
+        2
+      ) asc,
       artist->name asc,
       _createdAt asc
     ) {
